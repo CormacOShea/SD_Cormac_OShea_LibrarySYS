@@ -13,20 +13,21 @@ public class LibraryApp extends JFrame implements ActionListener {
     private JMenu AdminMenu;
     private JLabel imgLabel;
     private JLabel welcomeLabel;
-    private JPanel welcomePanel;
+    private JPanel wlcPanel;
 
 
     public LibraryApp(){
         setTitle("Library System");
         setSize(400,250);
-        setDefaultCloseOperation(EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
         setResizable(true);
+        setVisible(true);
+        setDefaultCloseOperation(EXIT_ON_CLOSE);
 
-        setIconImage(new ImageIcon(getClass().getResource("image.jpg")).getImage());
+        setIconImage(new ImageIcon(getClass().getResource("book.png")).getImage());
 
-        Container container = getContentPane();
-        setLayout(new FlowLayout());
+        Container cpane = this.getContentPane();
+       cpane.setLayout(new GridBagLayout());
 
         createStudentMenu();
         createBookMenu();
@@ -39,26 +40,35 @@ public class LibraryApp extends JFrame implements ActionListener {
         menuBar.add(studentMenu);
         menuBar.add(bookMenu);
 
+        welcomeLabel = new JLabel("Menu Tester");
+        add(welcomeLabel);
 
-        welcomePanel = new JPanel();
-        welcomePanel.add(Box.createVerticalStrut(10));
-        welcomePanel.setLayout(new BoxLayout(welcomePanel, BoxLayout.Y_AXIS));
+        this.wlcPanel = new JPanel();
+        this.wlcPanel.add(Box.createVerticalStrut(10));
+        this.wlcPanel.setLayout(new BoxLayout(this.wlcPanel, 1));
+        this.welcomeLabel = new JLabel("Welcome to the System");
+        this.welcomeLabel.setFont(new Font("serif", 3, 20));
+        this.welcomeLabel.setForeground(Color.BLUE);
+        this.welcomeLabel.setAlignmentX(0.5F);
+        this.wlcPanel.add(this.welcomeLabel);
+        this.wlcPanel.add(Box.createVerticalStrut(35));
 
-        welcomeLabel= new JLabel("Welcome to the Library System");
-        welcomeLabel.setFont(new Font("Times new Roman",3,30));
-        welcomeLabel.setForeground(Color.BLACK);
+        try {
+            System.out.println(this.getClass().getResource("owl.png"));
+            this.imgLabel = new JLabel();
+            this.imgLabel.setIcon(new ImageIcon(this.getClass().getResource("owl.png")));
+            this.imgLabel.setAlignmentX(0.5F);
+            this.wlcPanel.add(this.imgLabel);
+        } catch (Exception var4) {
+            JOptionPane.showMessageDialog((Component)null, "Invalid Image File in Main Screen");
+        }
 
-        welcomeLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
-        welcomePanel.add(welcomeLabel);
-        welcomePanel.add(Box.createVerticalStrut(35));
 
 
 
     }
-    private void setIconImage(ImageIcon imageIcon) {
-    }
 
-    public static void main(String[] args) {LibraryApp frame = new LibraryApp();}
+    public static void main(String[] args) {LibraryApp app = new LibraryApp();}
     //when a menu item is clicked, response starts here
     public void actionPerformed(ActionEvent event) {
         String menuName;

@@ -12,22 +12,17 @@ public class LibraryApp extends JFrame implements ActionListener {
     private JMenu bookMenu;
     private JMenu AdminMenu;
     private JLabel imgLabel;
-    private JLabel welcomeLabel;
-    private JPanel wlcPanel;
+    private JLabel label1;
+    private ImageIcon image1;
+
 
 
     public LibraryApp(){
         setTitle("Library System");
-        setSize(400,250);
-        setLocationRelativeTo(null);
-        setResizable(true);
-        setVisible(true);
-        setDefaultCloseOperation(EXIT_ON_CLOSE);
+
 
         setIconImage(new ImageIcon(getClass().getResource("book.png")).getImage());
 
-        Container cpane = this.getContentPane();
-       cpane.setLayout(new GridBagLayout());
 
         createStudentMenu();
         createBookMenu();
@@ -40,35 +35,33 @@ public class LibraryApp extends JFrame implements ActionListener {
         menuBar.add(studentMenu);
         menuBar.add(bookMenu);
 
-        welcomeLabel = new JLabel("Menu Tester");
-        add(welcomeLabel);
+        setSize(400,350);
+        setLocationRelativeTo(null);
+        setResizable(true);
+        setVisible(true);
+        setDefaultCloseOperation(EXIT_ON_CLOSE);
+        setLayout(new FlowLayout());
 
-        this.wlcPanel = new JPanel();
-        this.wlcPanel.add(Box.createVerticalStrut(10));
-        this.wlcPanel.setLayout(new BoxLayout(this.wlcPanel, 1));
-        this.welcomeLabel = new JLabel("Welcome to the System");
-        this.welcomeLabel.setFont(new Font("serif", 3, 20));
-        this.welcomeLabel.setForeground(Color.BLUE);
-        this.welcomeLabel.setAlignmentX(0.5F);
-        this.wlcPanel.add(this.welcomeLabel);
-        this.wlcPanel.add(Box.createVerticalStrut(35));
+        image1 = new ImageIcon(getClass().getResource("owl2.png"));
 
-        try {
-            System.out.println(this.getClass().getResource("owl.png"));
-            this.imgLabel = new JLabel();
-            this.imgLabel.setIcon(new ImageIcon(this.getClass().getResource("owl.png")));
-            this.imgLabel.setAlignmentX(0.5F);
-            this.wlcPanel.add(this.imgLabel);
-        } catch (Exception var4) {
-            JOptionPane.showMessageDialog((Component)null, "Invalid Image File in Main Screen");
-        }
+        label1 = new JLabel(image1);
+        add(label1);
+
+
 
 
 
 
     }
 
-    public static void main(String[] args) {LibraryApp app = new LibraryApp();}
+    public static void main(String[] args) {
+        LibraryApp app = new LibraryApp();
+        app.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        app.setVisible(true);
+
+
+
+    }
     //when a menu item is clicked, response starts here
     public void actionPerformed(ActionEvent event) {
         String menuName;
@@ -77,7 +70,7 @@ public class LibraryApp extends JFrame implements ActionListener {
         if (menuName.equals("Quit"))
             System.exit(0);
         else
-            welcomeLabel.setText("Menu Item " + menuName + " is selected");
+            label1.setText("Menu Item " + menuName + " is selected");
 
     }
 

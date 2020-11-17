@@ -5,7 +5,9 @@ import javax.swing.border.TitledBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowEvent;
 import java.util.ArrayList;
+import java.util.LinkedList;
 
 public class LibraryApp extends JFrame implements ActionListener {
     private JMenu studentMenu;
@@ -14,6 +16,9 @@ public class LibraryApp extends JFrame implements ActionListener {
     private JLabel imgLabel;
     private JLabel label1;
     private ImageIcon image1;
+    private JPanel owlPanel;
+    ArrayList<Student> students = new ArrayList();
+    ArrayList<Book> books = new ArrayList();
 
 
 
@@ -32,8 +37,8 @@ public class LibraryApp extends JFrame implements ActionListener {
         JMenuBar menuBar = new JMenuBar();
         setJMenuBar(menuBar);
         menuBar.setBackground(Color.PINK);
-        menuBar.add(studentMenu);
-        menuBar.add(bookMenu);
+        menuBar.add(this.studentMenu);
+        menuBar.add(this.bookMenu);
 
         setSize(400,350);
         setLocationRelativeTo(null);
@@ -42,9 +47,10 @@ public class LibraryApp extends JFrame implements ActionListener {
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setLayout(new FlowLayout());
 
+
         image1 = new ImageIcon(getClass().getResource("owl2.png"));
 
-        label1 = new JLabel(image1);
+       label1 = new JLabel(image1);
         add(label1);
 
 
@@ -52,9 +58,19 @@ public class LibraryApp extends JFrame implements ActionListener {
 
 
 
-    }
 
-    public static void main(String[] args) {
+    }
+    /**public void windowClosing(WindowEvent e){
+        JOptionPane.showMessageDialog(null,"Now closing window", "Closing Window",
+                JOptionPane.INFORMATION_MESSAGE);
+        int choice = JOptionPane.showConfirmDialog(null,"Are you sure you want to exit this application?",
+                "Exiting Application Confirmation",JOptionPane.YES_NO_CANCEL_OPTION);
+
+        if (choice==JOptionPane.YES_OPTION)
+            dispose();
+    }**/
+
+   public static void main(String[] args) {
         LibraryApp app = new LibraryApp();
         app.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         app.setVisible(true);
@@ -68,9 +84,15 @@ public class LibraryApp extends JFrame implements ActionListener {
         menuName = event.getActionCommand();
 
         if (menuName.equals("Quit"))
-            System.exit(0);
-        else
-            label1.setText("Menu Item " + menuName + " is selected");
+            JOptionPane.showMessageDialog(null,"Now closing window", "Closing Window",
+                    JOptionPane.INFORMATION_MESSAGE);
+        int choice = JOptionPane.showConfirmDialog(null,"Are you sure you want to exit this application?",
+                "Exiting Application Confirmation",JOptionPane.YES_NO_CANCEL_OPTION);
+
+        if (choice==JOptionPane.YES_OPTION)
+            dispose();
+
+
 
     }
 
@@ -114,6 +136,8 @@ public class LibraryApp extends JFrame implements ActionListener {
 
         bookMenu.add(item);
     }
+
+
 
 
 }

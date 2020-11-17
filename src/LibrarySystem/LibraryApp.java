@@ -17,6 +17,7 @@ public class LibraryApp extends JFrame implements ActionListener {
     private JLabel label1;
     private ImageIcon image1;
     private JPanel owlPanel;
+    private JButton studentButton;
     ArrayList<Student> students = new ArrayList();
     ArrayList<Book> books = new ArrayList();
 
@@ -48,6 +49,9 @@ public class LibraryApp extends JFrame implements ActionListener {
         setLayout(new FlowLayout());
 
 
+
+        this.studentButton = new JButton("Edit");
+        this.studentButton.addActionListener(this);
         image1 = new ImageIcon(getClass().getResource("owl2.png"));
 
        label1 = new JLabel(image1);
@@ -60,15 +64,6 @@ public class LibraryApp extends JFrame implements ActionListener {
 
 
     }
-    /**public void windowClosing(WindowEvent e){
-        JOptionPane.showMessageDialog(null,"Now closing window", "Closing Window",
-                JOptionPane.INFORMATION_MESSAGE);
-        int choice = JOptionPane.showConfirmDialog(null,"Are you sure you want to exit this application?",
-                "Exiting Application Confirmation",JOptionPane.YES_NO_CANCEL_OPTION);
-
-        if (choice==JOptionPane.YES_OPTION)
-            dispose();
-    }**/
 
    public static void main(String[] args) {
         LibraryApp app = new LibraryApp();
@@ -78,45 +73,29 @@ public class LibraryApp extends JFrame implements ActionListener {
 
 
     }
-    //when a menu item is clicked, response starts here
-    public void actionPerformed(ActionEvent event) {
-        String menuName;
-        menuName = event.getActionCommand();
-
-        if (menuName.equals("Quit"))
-            JOptionPane.showMessageDialog(null,"Now closing window", "Closing Window",
-                    JOptionPane.INFORMATION_MESSAGE);
-        int choice = JOptionPane.showConfirmDialog(null,"Are you sure you want to exit this application?",
-                "Exiting Application Confirmation",JOptionPane.YES_NO_CANCEL_OPTION);
-
-        if (choice==JOptionPane.YES_OPTION)
-            dispose();
 
 
 
-    }
+
+
 
     private void createStudentMenu(){
         JMenuItem item;
 
-        studentMenu = new JMenu("Students");
+        this.studentMenu = new JMenu("Students");
 
-        item = new JMenuItem("Add");
+        item = new JMenuItem("Edit");
         item.addActionListener(this);
 
-        studentMenu.add(item);
+        this.studentMenu.add(item);
 
-        item = new JMenuItem("View");
-        item.addActionListener(this);
-
-        studentMenu.add(item);
 
         studentMenu.addSeparator();//adds a horizontal separator line
 
         item = new JMenuItem("Quit");
         item.addActionListener(this);
 
-        studentMenu.add(item);
+        this.studentMenu.add(item);
 
 
     }
@@ -136,8 +115,47 @@ public class LibraryApp extends JFrame implements ActionListener {
 
         bookMenu.add(item);
     }
+    public void editStudents(){
+        String choice;
+
+        do {
+            choice = JOptionPane.showInputDialog("1. Add a Student\n2.Amend a Student\n3. Remove a Student" +
+                    "\n4. View all Students in the system\n5. Quit\n\nPlease enter your choice");
+
+            int choiceAsInt = Integer.parseInt(choice);
+
+            while (choiceAsInt<1 || choiceAsInt >5){
+
+                choice = JOptionPane.showInputDialog("1. Add a Student\n2. Amend a Student\n3. Remove a Student" +
+                        "\n4. View all Students on the system\n5. Quit\n\nInvalid choice entered!! Must be between 1 and 5 inclusive");
+
+                choiceAsInt = Integer.parseInt(choice);
+
+            }
 
 
+        }while (!choice.equals("5"));
 
+        JOptionPane.showMessageDialog(null,"Thanks for using the system!",
+                "Farewell", JOptionPane.INFORMATION_MESSAGE);
 
-}
+    }
+
+    //when a menu item is clicked, response starts here
+    public void actionPerformed(ActionEvent e) {
+        String menuName;
+        menuName = e.getActionCommand();
+        if (menuName == "Edit") {
+            this.editStudents();
+        }
+            if (menuName.equals("Quit"))
+                JOptionPane.showMessageDialog(null, "Now closing window", "Closing Window",
+                        JOptionPane.INFORMATION_MESSAGE);
+            int choice = JOptionPane.showConfirmDialog(null, "Are you sure you want to exit this application?",
+                    "Exiting Application Confirmation", JOptionPane.YES_NO_CANCEL_OPTION);
+            if (choice == JOptionPane.YES_OPTION)
+                dispose();
+        }
+
+    }
+

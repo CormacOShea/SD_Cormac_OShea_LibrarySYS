@@ -84,7 +84,7 @@ public class LibraryApp extends JFrame implements ActionListener {
 
         this.studentMenu = new JMenu("Students");
 
-        item = new JMenuItem("Edit");
+        item = new JMenuItem("Register");
         item.addActionListener(this);
 
         this.studentMenu.add(item);
@@ -105,7 +105,7 @@ public class LibraryApp extends JFrame implements ActionListener {
 
         bookMenu = new JMenu("Books");
 
-        item = new JMenuItem("Add");
+        item = new JMenuItem("Manage");
         item.addActionListener(this);
 
         bookMenu.add(item);
@@ -145,7 +145,7 @@ public class LibraryApp extends JFrame implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         String menuName;
         menuName = e.getActionCommand();
-        if (menuName == "Edit") {
+        if (menuName == "Manage") {
             this.editStudents();
         }
             if (menuName.equals("Quit"))

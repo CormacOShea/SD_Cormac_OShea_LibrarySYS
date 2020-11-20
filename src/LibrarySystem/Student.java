@@ -6,6 +6,7 @@ public class Student implements Serializable {
     private int id;
     private String name;
 
+
     public Student(int id, String name) {
         setId(id);
         setName(name);

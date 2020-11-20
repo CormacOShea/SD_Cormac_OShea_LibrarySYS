@@ -5,14 +5,12 @@ public class Book {
     private String author;
     private int pages;
     private String status;
-    private Student student;
     private int quantity;
 
-    public Book(String title, String author, int pages, int quantity, Student student){
+    public Book(String title, String author, int pages, int quantity){
         setTitle(title);
         setAuthor(author);
         setPages(pages);
-        setStudent(student);
         setQuantity(quantity);
 
 
@@ -58,11 +56,9 @@ public class Book {
         this.status = status;
     }
 
-    public Student getStudent() {
-        return student;
-    }
 
-    public void setStudent(Student student) {
-        this.student = student;
+    public String toString(){
+        return "Book details are as follows: title: " + getTitle() + " author: " + getAuthor() +
+                " pages: " + getPages() + " quantity: " + getQuantity() + " status: " + getStatus();
     }
 }

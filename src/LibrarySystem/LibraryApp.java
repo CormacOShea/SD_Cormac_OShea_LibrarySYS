@@ -7,6 +7,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.LinkedList;
 
 public class LibraryApp extends JFrame implements ActionListener {
@@ -116,29 +117,109 @@ public class LibraryApp extends JFrame implements ActionListener {
         bookMenu.add(item);
     }
     public void editStudents(){
+
+
+    }
+
+    public void manageBook(){
+
+        Book b1 = new Book("Harry Potter and the Goblet of Fire","J.K Rowling",654,6);
+        Book b2 = new Book("Harry Potter and the Philosopher's Stone","J.K Rowling",345,3);
+        Book b3 = new Book("Harry Potter and the Prisoner of Azkaban","J.K Rowling",456,2);
+
+        ArrayList<Book> allBooks = new ArrayList<Book>(Arrays.asList(b1,b2,b3));
+
         String choice;
 
         do {
             choice = JOptionPane.showInputDialog("1. Add a Student\n2.Amend a Student\n3. Remove a Student" +
-                    "\n4. View all Students in the system\n5. Quit\n\nPlease enter your choice");
+                    "\n4. Quit\n\nPlease enter your choice");
 
             int choiceAsInt = Integer.parseInt(choice);
 
-            while (choiceAsInt<1 || choiceAsInt >5){
+            while (choiceAsInt<1 || choiceAsInt >4){
 
                 choice = JOptionPane.showInputDialog("1. Add a Student\n2. Amend a Student\n3. Remove a Student" +
-                        "\n4. View all Students on the system\n5. Quit\n\nInvalid choice entered!! Must be between 1 and 5 inclusive");
+                        "\n5. Quit\n\nInvalid choice entered!! Must be between 1 and 5 inclusive");
 
                 choiceAsInt = Integer.parseInt(choice);
 
             }
 
+            switch (choice){
+                case "1":
+                    addBook(allBooks);
+                    break;
 
-        }while (!choice.equals("5"));
+                case "2":
+                    amendBook(allBooks);
+                    break;
+
+                case "3":
+                    removeBook(allBooks);
+                    break;
+            }
+
+
+        }while (!choice.equals("4"));
 
         JOptionPane.showMessageDialog(null,"Thanks for using the system!",
                 "Farewell", JOptionPane.INFORMATION_MESSAGE);
 
+        System.exit(0);
+
+
+    }
+
+    private static void addBook(ArrayList<Book> allBooks) {
+        String title = JOptionPane.showInputDialog("Please enter the title of the Book");
+        String author = JOptionPane.showInputDialog("Please enter the author of the Book");
+        int pages = Integer.parseInt(JOptionPane.showInputDialog("Please enter the number of pages of the Book"));
+        int quantity = Integer.parseInt(JOptionPane.showInputDialog("Please enter the number of copies of the Book"));
+
+        Book b = new Book(title,author,pages,quantity);
+
+        allBooks.add(b);
+        JOptionPane.showMessageDialog(null,"Book now created and added to the system",
+                "Book Added",JOptionPane.INFORMATION_MESSAGE);
+
+    }
+
+    private static void amendBook(ArrayList<Book> allBooks){
+        ArrayList<Book> foundBooks = new ArrayList<Book>();
+        String searchKey = JOptionPane.showInputDialog("Please enter the title of the Book you wish to amend");
+
+        for (Book bk: allBooks)
+            if (bk.getTitle().toLowerCase().contains(searchKey.toLowerCase()))
+                foundBooks.add(bk);
+
+        String text="";
+
+        for (Book bk: foundBooks)
+            if (bk !=null){
+                text +=bk + "\n";
+            }
+        String searchTitle = JOptionPane.showInputDialog("The following books matched your search phrase\n\n" + text +
+                "\n\nEnter the title of the one yu want to amend");
+
+            Book bookToAmend = null;
+
+            for (Book bk : allBooks)
+                if (bk != null && bk.getTitle()==searchTitle)
+                    bookToAmend = bk;
+
+            String amendChoice = JOptionPane.showInputDialog("The details of the product you wish to amend are:\n\n " +
+                    bookToAmend + "\n\n1. Amend Title\n2. Amend Author\n3. Amend pages " +
+                    "\n4. Amend quantity\n5. Cancel Amendment\n\nPlease enter your choice");
+
+                    int amendChoiceAsInt = Integer.parseInt(amendChoice);
+
+                while (amendChoiceAsInt<1 || amendChoiceAsInt>5){
+                    amendChoice = JOptionPane.showInputDialog("The details of the book you wish to amend are:\n\n" +
+                           bookToAmend + "\n\n1. Amend Title\n2. Amend Author\n3. Amend pages" +
+                            "\n4. Amend quantity\n5. Cancel Amendment\n\nInvalid choice entered!! Must be between 1 and 5 inclusive");
+                    
+                }
     }
 
     //when a menu item is clicked, response starts here
@@ -146,7 +227,7 @@ public class LibraryApp extends JFrame implements ActionListener {
         String menuName;
         menuName = e.getActionCommand();
         if (menuName == "Manage") {
-            this.editStudents();
+            this.manageBook();
         }
             if (menuName.equals("Quit"))
                 JOptionPane.showMessageDialog(null, "Now closing window", "Closing Window",

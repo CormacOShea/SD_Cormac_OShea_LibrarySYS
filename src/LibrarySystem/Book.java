@@ -4,7 +4,6 @@ public class Book {
     private String title;
     private String author;
     private int pages;
-    private String status;
     private int quantity;
 
     public Book(String title, String author, int pages, int quantity){
@@ -48,17 +47,10 @@ public class Book {
         this.quantity = quantity;
     }
 
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
 
 
     public String toString(){
         return "Book details are as follows: title: " + getTitle() + " author: " + getAuthor() +
-                " pages: " + getPages() + " quantity: " + getQuantity() + " status: " + getStatus();
+                " pages: " + getPages() + " quantity: " + getQuantity();
     }
 }

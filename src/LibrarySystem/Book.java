@@ -1,18 +1,28 @@
 package LibrarySystem;
 
 public class Book {
+    private int id;
     private String title;
     private String author;
     private int pages;
     private int quantity;
 
-    public Book(String title, String author, int pages, int quantity){
+    public Book(int id, String title, String author, int pages, int quantity){
+        setId(id);
         setTitle(title);
         setAuthor(author);
         setPages(pages);
         setQuantity(quantity);
 
 
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getTitle() {
@@ -50,7 +60,7 @@ public class Book {
 
 
     public String toString(){
-        return "Book details are as follows: title: " + getTitle() + " author: " + getAuthor() +
+        return "Book details are as follows: id: " +getId() + " title: " + getTitle() + " author: " + getAuthor() +
                 " pages: " + getPages() + " quantity: " + getQuantity();
     }
 }

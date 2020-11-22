@@ -117,8 +117,53 @@ public class LibraryApp extends JFrame implements ActionListener {
 
         bookMenu.add(item);
     }
-    public void editStudents(){
+    public void registerStudents(){
 
+        Student s1 = new Student(1,"Cormac O'Shea","Computing with Software Development");
+        Student s2 = new Student(2,"Jurgen Klopp","Sports with Leisure");
+        Student s3 = new Student(3,"Mo Salah","Sports with Leisure");
+
+
+        ArrayList<Student> allStudents = new ArrayList<Student>(Arrays.asList(s1,s2,s3));
+
+        String choice;
+
+        do{
+            choice = JOptionPane.showInputDialog("1. Add a Student\n2. View Students\n3.Quit\n\nInvalid choice entered!! Must be between 1 and 3 inclusive");
+
+            int choiceAsInt = Integer.parseInt(choice);
+
+            while (choiceAsInt<1 || choiceAsInt>5){
+                choice = JOptionPane.showInputDialog("1. Add a Student\\n2. View Students\\n3.Quit\\n\\nInvalid choice entered!! Must be between 1 and 3 inclusive");
+
+                choiceAsInt = Integer.parseInt(choice);
+
+            }
+
+            switch (choice){
+                case "1":
+                    addStudent(allStudents);
+                    break;
+
+                case "2":
+                    viewStudents(allStudents);
+
+            }
+        }while (!choice.equals("3"));
+        JOptionPane.showMessageDialog(null,"Thanks for using the system!",
+                "Farewell",JOptionPane.INFORMATION_MESSAGE);
+
+        System.exit(0);
+
+
+    }
+
+    public static void addStudent(ArrayList<Student> allStudents){
+        int id = Integer.parseInt(JOptionPane.showInputDialog("Please enter the student id"));
+        String name = JOptionPane.showInputDialog("Please enter the name of the Student");
+        String course = JOptionPane.showInputDialog("Please enter the course of the student");
+
+        Student s = new Student(id,name,course);
 
     }
 
@@ -328,6 +373,11 @@ public class LibraryApp extends JFrame implements ActionListener {
         menuName = e.getActionCommand();
         if (menuName == "Manage") {
             this.manageBook();
+        }
+
+        if (menuName == "Register"){
+            this.registerStudents();
+
         }
             if (menuName.equals("Quit"))
                 JOptionPane.showMessageDialog(null, "Now closing window", "Closing Window",

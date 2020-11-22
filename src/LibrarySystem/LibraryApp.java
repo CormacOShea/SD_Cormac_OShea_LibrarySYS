@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.LinkedList;
+import java.util.stream.Collector;
 
 public class LibraryApp extends JFrame implements ActionListener {
     private JMenu studentMenu;
@@ -119,9 +120,9 @@ public class LibraryApp extends JFrame implements ActionListener {
     }
     public void registerStudents(){
 
-        Student s1 = new Student(1,"Cormac O'Shea","Computing with Software Development");
-        Student s2 = new Student(2,"Jurgen Klopp","Sports with Leisure");
-        Student s3 = new Student(3,"Mo Salah","Sports with Leisure");
+        Student s1 = new Student("t00200298",1,"Cormac O'Shea","Computing with Software Development");
+        Student s2 = new Student("t00110234",2,"Jurgen Klopp","Sports with Leisure");
+        Student s3 = new Student("t02132354",3,"Mo Salah","Sports with Leisure");
 
 
         ArrayList<Student> allStudents = new ArrayList<Student>(Arrays.asList(s1,s2,s3));
@@ -158,12 +159,30 @@ public class LibraryApp extends JFrame implements ActionListener {
 
     }
 
-    public static void addStudent(ArrayList<Student> allStudents){
-        int id = Integer.parseInt(JOptionPane.showInputDialog("Please enter the student id"));
-        String name = JOptionPane.showInputDialog("Please enter the name of the Student");
-        String course = JOptionPane.showInputDialog("Please enter the course of the student");
 
-        Student s = new Student(id,name,course);
+    public static void addStudent(ArrayList<Student> allStudents){
+        String Tnumber = JOptionPane.showInputDialog("Please enter the student id"));
+        boolean valid;
+        int i;
+
+        while (!Tnumber.equals("")) {
+            valid = false;
+
+            while (!valid) {
+
+                if (Tnumber.length() == 9) {
+                    for (i = 0; i <= 8; i++)
+                        if (!Character.isDigit(Tnumber.charAt(i)))
+                            break;
+
+
+                    if (i == 8)
+                        if (Character.isDigit(Tnumber.charAt()))
+
+                }
+
+            }
+        }
 
     }
 

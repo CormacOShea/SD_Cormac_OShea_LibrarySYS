@@ -10,15 +10,21 @@ public class Student implements Serializable {
     private static int count=0;
 
 
-    public Student(String Tnumber,int id, String name, String course) {
-        setId();
+    public Student(String Tnumber, String name, String course) {
+        setId(id);
         setTnumber(Tnumber);
         setName(name);
+        autoIncrement();
+        setId(count);
         setCourse(course);
     }
 
     public String getTnumber() {
         return Tnumber;
+    }
+
+    private void autoIncrement(){
+        count++;
     }
 
     public void setTnumber(String tnumber) {
@@ -29,25 +35,18 @@ public class Student implements Serializable {
         return id;
     }
 
-    public void setId() {
-        count++;
-        this.id = count;
-    }
-
-    public static int getCount() {
-        return count;
+    private void setId(int id) {
+        this.id = id;
     }
 
     public String getName() {
+
         return name;
     }
 
     public void setName(String name) {
-        this.name = name;
-    }
 
-    public String toString() {
-        return "\n\nName: " + getName();
+        this.name = name;
     }
 
     public String getCourse() {
@@ -56,5 +55,9 @@ public class Student implements Serializable {
 
     public void setCourse(String course) {
         this.course = course;
+    }
+
+    public String toString() {
+        return "\n\nName: " + getName();
     }
 }

@@ -120,9 +120,9 @@ public class LibraryApp extends JFrame implements ActionListener {
     }
     public void registerStudents(){
 
-        Student s1 = new Student("t00200298",1,"Cormac O'Shea","Computing with Software Development");
-        Student s2 = new Student("t00110234",2,"Jurgen Klopp","Sports with Leisure");
-        Student s3 = new Student("t02132354",3,"Mo Salah","Sports with Leisure");
+        Student s1 = new Student("t00200298","Cormac O'Shea","Computing with Software Development");
+        Student s2 = new Student("t00110234","Jurgen Klopp","Sports with Leisure");
+        Student s3 = new Student("t02132354","Mo Salah","Sports with Leisure");
 
 
         ArrayList<Student> allStudents = new ArrayList<Student>(Arrays.asList(s1,s2,s3));
@@ -161,28 +161,41 @@ public class LibraryApp extends JFrame implements ActionListener {
 
 
     public static void addStudent(ArrayList<Student> allStudents){
-        String Tnumber = JOptionPane.showInputDialog("Please enter the student id"));
         boolean valid;
-        int i;
+        String Tnumber;
+
+        Tnumber = JOptionPane.showInputDialog("Please enter the tnumber of the student");
 
         while (!Tnumber.equals("")) {
             valid = false;
+            int i;
 
             while (!valid) {
 
-                if (Tnumber.length() == 9) {
-                    for (i = 0; i <= 8; i++)
-                        if (!Character.isDigit(Tnumber.charAt(i)))
-                            break;
+                if (Tnumber.length()!=8){
+                    JOptionPane.showMessageDialog(null,"Invalid tnumber","Invalid",JOptionPane.INFORMATION_MESSAGE);
 
+                }
 
-                    if (i == 8)
-                        if (Character.isDigit(Tnumber.charAt()))
+                 if
+                (Tnumber.length() == 8)  {
+                    for (i = 0; i <= 7 && Character.isDigit(Tnumber.charAt(i)); i++)
+
+             if (i==9 && Tnumber.charAt(0)=='t' || Tnumber.charAt(0)=='T' ){
+                 String name = JOptionPane.showInputDialog("Please enter the name of the Student");
+
+                 String course = JOptionPane.showInputDialog("Please enter the course of the Student");
+             }
+                    else {
+                        Tnumber = JOptionPane.showInputDialog("Invalid tnumber!! Please re-enter");
+             }
 
                 }
 
             }
         }
+
+        Student s = new Student()
 
     }
 
@@ -394,7 +407,7 @@ public class LibraryApp extends JFrame implements ActionListener {
             this.manageBook();
         }
 
-        if (menuName == "Register"){
+        else if (menuName == "Register"){
             this.registerStudents();
 
         }

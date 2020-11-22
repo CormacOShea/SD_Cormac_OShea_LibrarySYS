@@ -182,9 +182,8 @@ public class LibraryApp extends JFrame implements ActionListener {
                     for (i = 0; i <= 7 && Character.isDigit(Tnumber.charAt(i)); i++)
 
              if (i==9 && Tnumber.charAt(0)=='t' || Tnumber.charAt(0)=='T' ){
-                 String name = JOptionPane.showInputDialog("Please enter the name of the Student");
-
-                 String course = JOptionPane.showInputDialog("Please enter the course of the Student");
+                 JOptionPane.showMessageDialog(null,"Valid tnumber entered","Valid!",
+                         JOptionPane.INFORMATION_MESSAGE);
              }
                     else {
                         Tnumber = JOptionPane.showInputDialog("Invalid tnumber!! Please re-enter");
@@ -194,9 +193,34 @@ public class LibraryApp extends JFrame implements ActionListener {
 
             }
         }
+        String name = JOptionPane.showInputDialog("Please enter the name of the Student");
 
-        Student s = new Student()
+        String course = JOptionPane.showInputDialog("Please enter the course of the Student");
 
+
+        Student s = new Student(Tnumber,name,course);
+
+        allStudents.add(s);
+        JOptionPane.showMessageDialog(null,"Student now created and added to the system!",
+                "Student added",JOptionPane.INFORMATION_MESSAGE);
+
+    }
+
+    private static void viewStudents(ArrayList<Student> allStudents){
+        String allStudentData="";
+        Student st;
+
+        Iterator<Student> iterator = allStudents.iterator();
+
+        while (iterator.hasNext()){
+            st = iterator.next();
+            if (st !=null)
+                allStudentData += st + "\n";
+
+        }
+
+        JOptionPane.showMessageDialog(null,allStudentData,"List of all Students",
+                JOptionPane.INFORMATION_MESSAGE);
     }
 
     public void manageBook(){

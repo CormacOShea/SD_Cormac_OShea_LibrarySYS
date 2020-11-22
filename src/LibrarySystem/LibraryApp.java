@@ -25,8 +25,7 @@ public class LibraryApp extends JFrame implements ActionListener {
     ArrayList<Book> books = new ArrayList();
 
 
-
-    public LibraryApp(){
+    public LibraryApp() {
         setTitle("Library System");
 
 
@@ -37,14 +36,13 @@ public class LibraryApp extends JFrame implements ActionListener {
         createBookMenu();
 
 
-
         JMenuBar menuBar = new JMenuBar();
         setJMenuBar(menuBar);
         menuBar.setBackground(Color.PINK);
         menuBar.add(this.studentMenu);
         menuBar.add(this.bookMenu);
 
-        setSize(400,350);
+        setSize(400, 350);
         setLocationRelativeTo(null);
         setResizable(true);
         setVisible(true);
@@ -52,37 +50,26 @@ public class LibraryApp extends JFrame implements ActionListener {
         setLayout(new FlowLayout());
 
 
-
         this.studentButton = new JButton("Edit");
         this.studentButton.addActionListener(this);
         image1 = new ImageIcon(getClass().getResource("owl2.png"));
 
-       label1 = new JLabel(image1);
+        label1 = new JLabel(image1);
         add(label1);
-
-
-
-
-
 
 
     }
 
-   public static void main(String[] args) {
+    public static void main(String[] args) {
         LibraryApp app = new LibraryApp();
         app.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         app.setVisible(true);
 
 
-
     }
 
 
-
-
-
-
-    private void createStudentMenu(){
+    private void createStudentMenu() {
         JMenuItem item;
 
         this.studentMenu = new JMenu("Students");
@@ -103,7 +90,7 @@ public class LibraryApp extends JFrame implements ActionListener {
 
     }
 
-    private void createBookMenu(){
+    private void createBookMenu() {
         JMenuItem item;
 
         bookMenu = new JMenu("Books");
@@ -118,30 +105,31 @@ public class LibraryApp extends JFrame implements ActionListener {
 
         bookMenu.add(item);
     }
-    public void registerStudents(){
 
-        Student s1 = new Student("t00200298","Cormac O'Shea","Computing with Software Development");
-        Student s2 = new Student("t00110234","Jurgen Klopp","Sports with Leisure");
-        Student s3 = new Student("t02132354","Mo Salah","Sports with Leisure");
+    public void registerStudents() {
+
+        Student s1 = new Student("t00200298", "Cormac O'Shea", "Computing with Software Development");
+        Student s2 = new Student("t00110234", "Jurgen Klopp", "Sports with Leisure");
+        Student s3 = new Student("t02132354", "Mo Salah", "Sports with Leisure");
 
 
-        ArrayList<Student> allStudents = new ArrayList<Student>(Arrays.asList(s1,s2,s3));
+        ArrayList<Student> allStudents = new ArrayList<Student>(Arrays.asList(s1, s2, s3));
 
         String choice;
 
-        do{
+        do {
             choice = JOptionPane.showInputDialog("1. Add a Student\n2. View Students\n3.Quit\n\nInvalid choice entered!! Must be between 1 and 3 inclusive");
 
             int choiceAsInt = Integer.parseInt(choice);
 
-            while (choiceAsInt<1 || choiceAsInt>5){
+            while (choiceAsInt < 1 || choiceAsInt > 5) {
                 choice = JOptionPane.showInputDialog("1. Add a Student\\n2. View Students\\n3.Quit\\n\\nInvalid choice entered!! Must be between 1 and 3 inclusive");
 
                 choiceAsInt = Integer.parseInt(choice);
 
             }
 
-            switch (choice){
+            switch (choice) {
                 case "1":
                     addStudent(allStudents);
                     break;
@@ -150,9 +138,9 @@ public class LibraryApp extends JFrame implements ActionListener {
                     viewStudents(allStudents);
 
             }
-        }while (!choice.equals("3"));
-        JOptionPane.showMessageDialog(null,"Thanks for using the system!",
-                "Farewell",JOptionPane.INFORMATION_MESSAGE);
+        } while (!choice.equals("3"));
+        JOptionPane.showMessageDialog(null, "Thanks for using the system!",
+                "Farewell", JOptionPane.INFORMATION_MESSAGE);
 
         System.exit(0);
 
@@ -160,49 +148,50 @@ public class LibraryApp extends JFrame implements ActionListener {
     }
 
 
-    public static void addStudent(ArrayList<Student> allStudents){
-        boolean valid;
+    public static void addStudent(ArrayList<Student> allStudents) {
         String Tnumber;
 
         Tnumber = JOptionPane.showInputDialog("Please enter the tnumber of the student");
+        boolean valid = false;
 
-        while (!Tnumber.equals("")) {
-            valid = false;
-            int i;
 
-            while (!valid) {
+        while (!valid) {
 
-                if (Tnumber.length()!=8){
-                    JOptionPane.showMessageDialog(null,"Invalid tnumber","Invalid",JOptionPane.INFORMATION_MESSAGE);
+            if (Tnumber.length() != 9) {
+                Tnumber = JOptionPane.showInputDialog("Invalid tnumber");
+            } else {
+                int i;
+                for (i = 1; i <= 8 && Character.isDigit(Tnumber.charAt(i)); i++) {
 
                 }
 
-                 if
-                (Tnumber.length() == 8)  {
-                    for (i = 0; i <= 7 && Character.isDigit(Tnumber.charAt(i)); i++)
+                if (i == 9 && Tnumber.charAt(0) == 't' || Tnumber.charAt(0) == 'T') {
+                    JOptionPane.showMessageDialog(null, "Valid tnumber entered", "Valid!",
+                            JOptionPane.INFORMATION_MESSAGE);
+                    break;
 
-             if (i==9 && Tnumber.charAt(0)=='t' || Tnumber.charAt(0)=='T' ){
-                 JOptionPane.showMessageDialog(null,"Valid tnumber entered","Valid!",
-                         JOptionPane.INFORMATION_MESSAGE);
-             }
-                    else {
-                        Tnumber = JOptionPane.showInputDialog("Invalid tnumber!! Please re-enter");
-             }
-
+                } else {
+                    Tnumber = JOptionPane.showInputDialog("Invalid tnumber!! Please re-enter");
                 }
 
             }
+
         }
+
+
         String name = JOptionPane.showInputDialog("Please enter the name of the Student");
 
         String course = JOptionPane.showInputDialog("Please enter the course of the Student");
 
 
-        Student s = new Student(Tnumber,name,course);
+        Student s = new Student(Tnumber, name, course);
 
         allStudents.add(s);
         JOptionPane.showMessageDialog(null,"Student now created and added to the system!",
                 "Student added",JOptionPane.INFORMATION_MESSAGE);
+
+
+
 
     }
 

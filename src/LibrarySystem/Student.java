@@ -58,6 +58,7 @@ public class Student implements Serializable {
     }
 
     public String toString() {
-        return "\n\nName: " + getName();
+        return "\nId: " + getId() + " Tnumber: " + getTnumber()  + " Name: " + getName() +
+                " Course: " + getCourse();
     }
 }

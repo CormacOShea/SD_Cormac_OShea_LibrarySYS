@@ -6,6 +6,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
@@ -13,8 +14,7 @@ import java.util.LinkedList;
 import java.util.stream.Collector;
 
 public class LibraryApp extends JFrame implements ActionListener {
-    private JMenu studentMenu;
-    private JMenu bookMenu;
+    private JMenu fileMenu, bookMenu, studentMenu;
     private JMenu AdminMenu;
     private JLabel imgLabel;
     private JLabel label1;
@@ -23,6 +23,7 @@ public class LibraryApp extends JFrame implements ActionListener {
     private JButton studentButton;
     ArrayList<Student> students = new ArrayList();
     ArrayList<Book> books = new ArrayList();
+    private Student FileOutputStream;
 
 
     public LibraryApp() {
@@ -52,12 +53,14 @@ public class LibraryApp extends JFrame implements ActionListener {
 
         this.studentButton = new JButton("Edit");
         this.studentButton.addActionListener(this);
-        image1 = new ImageIcon(getClass().getResource("owl2.png"));
+        try {
+            image1 = new ImageIcon(getClass().getResource("owl2.png"));
 
-        label1 = new JLabel(image1);
-        add(label1);
-
-
+            label1 = new JLabel(image1);
+            add(label1);
+        } catch (Exception var4) {
+            JOptionPane.showMessageDialog((Component) null, "Invalid Image File in Main Screen");
+        }
     }
 
     public static void main(String[] args) {
@@ -69,18 +72,25 @@ public class LibraryApp extends JFrame implements ActionListener {
     }
 
 
+
+
     private void createStudentMenu() {
         JMenuItem item;
 
         this.studentMenu = new JMenu("Students");
 
-        item = new JMenuItem("Register");
+        item = new JMenuItem("Manage students");
         item.addActionListener(this);
 
         this.studentMenu.add(item);
 
 
         studentMenu.addSeparator();//adds a horizontal separator line
+
+        item = new JMenuItem("Save");
+        item.addActionListener(this);
+
+        this.studentMenu.add(item);
 
         item = new JMenuItem("Quit");
         item.addActionListener(this);
@@ -106,7 +116,8 @@ public class LibraryApp extends JFrame implements ActionListener {
         bookMenu.add(item);
     }
 
-    public void registerStudents() {
+    public void manageStudents() {
+
 
         Student s1 = new Student("t00200298", "Cormac O'Shea", "Computing with Software Development");
         Student s2 = new Student("t00110234", "Jurgen Klopp", "Sports with Leisure");
@@ -187,30 +198,47 @@ public class LibraryApp extends JFrame implements ActionListener {
         Student s = new Student(Tnumber, name, course);
 
         allStudents.add(s);
-        JOptionPane.showMessageDialog(null,"Student now created and added to the system!",
-                "Student added",JOptionPane.INFORMATION_MESSAGE);
-
-
+        JOptionPane.showMessageDialog(null, "Student now created and added to the system!",
+                "Student added", JOptionPane.INFORMATION_MESSAGE);
 
 
     }
 
-    private static void viewStudents(ArrayList<Student> allStudents){
-        String allStudentData="";
-        Student st;
 
-        Iterator<Student> iterator = allStudents.iterator();
 
-        while (iterator.hasNext()){
-            st = iterator.next();
-            if (st !=null)
-                allStudentData += st + "\n";
 
-        }
+        private static void viewStudents (ArrayList < Student > allStudents) {
+            String allStudentData = "";
+            Student st;
 
-        JOptionPane.showMessageDialog(null,allStudentData,"List of all Students",
-                JOptionPane.INFORMATION_MESSAGE);
+            Iterator<Student> iterator = allStudents.iterator();
+
+            while (iterator.hasNext()) {
+                st = iterator.next();
+                if (st != null)
+                    allStudentData += st + "\n";
+
+            }
+
+            JOptionPane.showMessageDialog(null, allStudentData, "List of all Students",
+                    JOptionPane.INFORMATION_MESSAGE);
+
     }
+
+    private void save() throws IOException {
+
+        ObjectOutputStream st = new ObjectOutputStream(new FileOutputStream("registerStudents.dat"));
+        st.writeObject(this.students);
+        st.close();
+
+       // ObjectOutputStream bk = new ObjectOutputStream(new FileOutputStream("ManageBooks.dat"));
+       //// bk.writeObject(this.books);
+       // bk.close();
+
+
+    }
+
+
 
     public void manageBook(){
 
@@ -411,6 +439,21 @@ public class LibraryApp extends JFrame implements ActionListener {
                 "List of all Books",JOptionPane.INFORMATION_MESSAGE);
     }
 
+  //  public void save() throws IOException {
+
+         ///   ObjectOutputStream st = new ObjectOutputStream(new FileOutputStream("registerStudents.dat"));
+          //  st.writeObject(this.students);
+          //  st.close();
+
+           // ObjectOutputStream bk = new ObjectOutputStream(new FileOutputStream("ManageBooks.dat"));
+          //  bk.writeObject(this.books);
+           // bk.close();
+
+
+       // }
+
+
+
 
     //when a menu item is clicked, response starts here
     public void actionPerformed(ActionEvent e) {
@@ -420,8 +463,19 @@ public class LibraryApp extends JFrame implements ActionListener {
             this.manageBook();
         }
 
-        else if (menuName == "Register"){
-            this.registerStudents();
+        else if (menuName == "Manage students"){
+            this.manageStudents();
+
+        } else if (menuName == "Save") {
+            try{
+                this.save();
+                JOptionPane.showMessageDialog((Component)null,"Data saved successfully",
+                        "Saved",1);
+            }catch (IOException var4) {
+                JOptionPane.showMessageDialog((Component)null,"Save Unsuccessful",
+                        "Unsuccessful",2);
+                var4.printStackTrace();
+            }
 
         }
             if (menuName.equals("Quit"))

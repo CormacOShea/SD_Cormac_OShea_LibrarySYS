@@ -2,7 +2,7 @@ package LibrarySystem;
 
 import java.io.Serializable;
 
-public class Student implements Serializable {
+public class Student {
     private int id;
     private String Tnumber;
     private String name;

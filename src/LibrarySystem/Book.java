@@ -7,13 +7,17 @@ public class Book implements Serializable {
     private String title;
     private String author;
     private int pages;
+    private int maxTime=30;
     private int quantity;
+    private static int count=0;
 
-    public Book(int id, String title, String author, int pages, int quantity){
+    public Book(String title, String author, int pages, int quantity){
         setId(id);
         setTitle(title);
         setAuthor(author);
         setPages(pages);
+        autoIncrement();
+        setId(count);
         setQuantity(quantity);
 
 
@@ -25,6 +29,10 @@ public class Book implements Serializable {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    private void autoIncrement(){
+        count++;
     }
 
     public String getTitle() {

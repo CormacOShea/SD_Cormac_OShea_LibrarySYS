@@ -14,15 +14,12 @@ import java.util.LinkedList;
 import java.util.stream.Collector;
 
 public class LibraryApp extends JFrame implements ActionListener {
-    private JMenu fileMenu, bookMenu, studentMenu;
-    private JMenu AdminMenu;
-    private JLabel imgLabel;
+    private JMenu bookMenu, studentMenu, issueMenu;
     private JLabel label1;
     private ImageIcon image1;
-    private JPanel owlPanel;
     private JButton studentButton;
     ArrayList<Student> students = new ArrayList();
-    ArrayList<Book> books = new ArrayList();
+    //  ArrayList<Book> books = new ArrayList();
     private Student FileOutputStream;
 
 
@@ -35,6 +32,7 @@ public class LibraryApp extends JFrame implements ActionListener {
 
         createStudentMenu();
         createBookMenu();
+        createIssueMenu();
 
 
         JMenuBar menuBar = new JMenuBar();
@@ -42,6 +40,7 @@ public class LibraryApp extends JFrame implements ActionListener {
         menuBar.setBackground(Color.PINK);
         menuBar.add(this.studentMenu);
         menuBar.add(this.bookMenu);
+        menuBar.add(this.issueMenu);
 
         setSize(400, 350);
         setLocationRelativeTo(null);
@@ -109,14 +108,31 @@ public class LibraryApp extends JFrame implements ActionListener {
         item.addActionListener(this);
 
         bookMenu.add(item);
+    }
+
+    private void createIssueMenu() {
+        JMenuItem item;
+
+        issueMenu = new JMenu("Issued Books");
+
+        item = new JMenuItem("Issue a Book");
+        item.addActionListener(this);
+
+        issueMenu.add(item);
+
+        item = new JMenuItem("View Issued Books");
+        item.addActionListener(this);
+
+        issueMenu.add(item);
+
 
         item = new JMenuItem("View Overdue");
         item.addActionListener(this);
 
-        bookMenu.add(item);
+        issueMenu.add(item);
     }
 
-    public void manageStudents() {
+    public void manageStudents() throws IOException {
 
 
         Student s1 = new Student("t00200298", "Cormac O'Shea", "Computing with Software Development");
@@ -129,12 +145,12 @@ public class LibraryApp extends JFrame implements ActionListener {
         String choice;
 
         do {
-            choice = JOptionPane.showInputDialog("1. Add a Student\n2. View Students\n3.Quit\n\nInvalid choice entered!! Must be between 1 and 3 inclusive");
+            choice = JOptionPane.showInputDialog("1. Add a Student\n2. View Students\n3. Save changes\n4.Quit\n\nInvalid choice entered!! Must be between 1 and 3 inclusive");
 
             int choiceAsInt = Integer.parseInt(choice);
 
             while (choiceAsInt < 1 || choiceAsInt > 5) {
-                choice = JOptionPane.showInputDialog("1. Add a Student\\n2. View Students\\n3.Quit\\n\\nInvalid choice entered!! Must be between 1 and 3 inclusive");
+                choice = JOptionPane.showInputDialog("1. Add a Student\\n2. View Students\\n3. Save changes\\n4. Quit\\n\\nInvalid choice entered!! Must be between 1 and 3 inclusive");
 
                 choiceAsInt = Integer.parseInt(choice);
 
@@ -147,9 +163,14 @@ public class LibraryApp extends JFrame implements ActionListener {
 
                 case "2":
                     viewStudents(allStudents);
+                    break;
+
+                case "3":
+                    save();
+                    break;
 
             }
-        } while (!choice.equals("3"));
+        } while (!choice.equals("4"));
         JOptionPane.showMessageDialog(null, "Thanks for using the system!",
                 "Farewell", JOptionPane.INFORMATION_MESSAGE);
 
@@ -226,10 +247,22 @@ public class LibraryApp extends JFrame implements ActionListener {
     }
 
     private void save() throws IOException {
+        try{
+            ObjectOutputStream st = new ObjectOutputStream(new FileOutputStream("manageStudents.dat"));
+            st.writeObject(this.students);
+            st.close();
 
-        ObjectOutputStream st = new ObjectOutputStream(new FileOutputStream("registerStudents.dat"));
-        st.writeObject(this.students);
-        st.close();
+
+            JOptionPane.showMessageDialog((Component)null,"Data saved successfully",
+                    "Saved",1);
+        }catch (IOException var4) {
+            JOptionPane.showMessageDialog((Component)null,"Save Unsuccessful",
+                    "Unsuccessful",2);
+            var4.printStackTrace();
+
+
+        }
+
 
        // ObjectOutputStream bk = new ObjectOutputStream(new FileOutputStream("ManageBooks.dat"));
        //// bk.writeObject(this.books);
@@ -242,9 +275,9 @@ public class LibraryApp extends JFrame implements ActionListener {
 
     public void manageBook(){
 
-        Book b1 = new Book(1,"Harry Potter and the Goblet of Fire","J.K Rowling",654,6);
-        Book b2 = new Book(2,"Harry Potter and the Philosopher's Stone","J.K Rowling",345,3);
-        Book b3 = new Book(3,"Harry Potter and the Prisoner of Azkaban","J.K Rowling",456,2);
+        Book b1 = new Book("Harry Potter and the Goblet of Fire","J.K Rowling",654,6);
+        Book b2 = new Book("Harry Potter and the Philosopher's Stone","J.K Rowling",345,3);
+        Book b3 = new Book("Harry Potter and the Prisoner of Azkaban","J.K Rowling",456,2);
 
         ArrayList<Book> allBooks = new ArrayList<Book>(Arrays.asList(b1,b2,b3));
 
@@ -300,7 +333,7 @@ public class LibraryApp extends JFrame implements ActionListener {
         int pages = Integer.parseInt(JOptionPane.showInputDialog("Please enter the number of pages of the Book"));
         int quantity = Integer.parseInt(JOptionPane.showInputDialog("Please enter the number of copies of the Book"));
 
-        Book b = new Book(id,title,author,pages,quantity);
+        Book b = new Book(title,author,pages,quantity);
 
         allBooks.add(b);
         JOptionPane.showMessageDialog(null,"Book now created and added to the system",
@@ -453,6 +486,11 @@ public class LibraryApp extends JFrame implements ActionListener {
        // }
 
 
+    public void issueBook(){
+      //  LoanedBook lb1 = new LoanedBook(new Book("Harry Potter and the Philospher's Stone","J.K Rowling", 345,1),)
+       // ArrayList<LoanedBook> allLoaned = new ArrayList<LoanedBook>(Arrays.asList())
+
+    }
 
 
     //when a menu item is clicked, response starts here
@@ -464,20 +502,16 @@ public class LibraryApp extends JFrame implements ActionListener {
         }
 
         else if (menuName == "Manage students"){
-            this.manageStudents();
 
-        } else if (menuName == "Save") {
-            try{
-                this.save();
-                JOptionPane.showMessageDialog((Component)null,"Data saved successfully",
-                        "Saved",1);
-            }catch (IOException var4) {
-                JOptionPane.showMessageDialog((Component)null,"Save Unsuccessful",
-                        "Unsuccessful",2);
-                var4.printStackTrace();
+            try {
+                this.manageStudents();
+            } catch (IOException ioException) {
+                ioException.printStackTrace();
             }
 
+
         }
+
             if (menuName.equals("Quit"))
                 JOptionPane.showMessageDialog(null, "Now closing window", "Closing Window",
                         JOptionPane.INFORMATION_MESSAGE);

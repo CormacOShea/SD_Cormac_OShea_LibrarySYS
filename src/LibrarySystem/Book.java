@@ -70,7 +70,9 @@ public class Book implements Serializable {
 
 
     public String toString(){
-        return "Book details are as follows: id: " +getId() + " title: " + getTitle() + " author: " + getAuthor() +
+         return  "Book details are as follows: id: " +getId() + " title: " + getTitle() + " author: " + getAuthor() +
                 " pages: " + getPages() + " quantity: " + getQuantity();
+
+
     }
 }

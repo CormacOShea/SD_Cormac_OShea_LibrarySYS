@@ -183,7 +183,7 @@ public class LibraryApp extends JFrame implements ActionListener {
     public static void addStudent(ArrayList<Student> allStudents) {
         String Tnumber;
         boolean valid = false;
-        Tnumber = JOptionPane.showInputDialog("Please enter the tnumber of the student");
+        Tnumber = JOptionPane.showInputDialog("Please enter the t-number of the student");
 
 
 
@@ -192,7 +192,7 @@ public class LibraryApp extends JFrame implements ActionListener {
 
             if (Tnumber.length() == 9) {
 
-                if (Tnumber.charAt(0) == 't' && Character.isDigit(Tnumber.charAt(1)) && Character.isDigit(Tnumber.charAt(2)) && Character.isDigit(Tnumber.charAt(3))
+                if (Tnumber.charAt(0) == 't' || Tnumber.charAt(0) == 'T' && Character.isDigit(Tnumber.charAt(1)) && Character.isDigit(Tnumber.charAt(2)) && Character.isDigit(Tnumber.charAt(3))
                         && Character.isDigit(Tnumber.charAt(4)) && Character.isDigit(Tnumber.charAt(5)) && Character.isDigit(Tnumber.charAt(6)) && Character.isDigit(Tnumber.charAt(7))
                         && Character.isDigit(Tnumber.charAt(8))) {
                     JOptionPane.showMessageDialog(null, "Valid t-number entered", "Valid!",

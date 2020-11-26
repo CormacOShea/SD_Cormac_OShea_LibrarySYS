@@ -182,30 +182,30 @@ public class LibraryApp extends JFrame implements ActionListener {
 
     public static void addStudent(ArrayList<Student> allStudents) {
         String Tnumber;
-
-        Tnumber = JOptionPane.showInputDialog("Please enter the tnumber of the student");
         boolean valid = false;
+        Tnumber = JOptionPane.showInputDialog("Please enter the tnumber of the student");
+
 
 
         while (!valid) {
 
-            if (Tnumber.length() != 9) {
-                Tnumber = JOptionPane.showInputDialog("Invalid tnumber");
-            } else {
-                int i;
-                for (i = 1; i <= 8 && Character.isDigit(Tnumber.charAt(i)); i++) {
 
-                }
+            if (Tnumber.length() == 9) {
 
-                if (i == 9 && Tnumber.charAt(0) == 't' || Tnumber.charAt(0) == 'T') {
-                    JOptionPane.showMessageDialog(null, "Valid tnumber entered", "Valid!",
+                if (Tnumber.charAt(0) == 't' && Character.isDigit(Tnumber.charAt(1)) && Character.isDigit(Tnumber.charAt(2)) && Character.isDigit(Tnumber.charAt(3))
+                        && Character.isDigit(Tnumber.charAt(4)) && Character.isDigit(Tnumber.charAt(5)) && Character.isDigit(Tnumber.charAt(6)) && Character.isDigit(Tnumber.charAt(7))
+                        && Character.isDigit(Tnumber.charAt(8))) {
+                    JOptionPane.showMessageDialog(null, "Valid t-number entered", "Valid!",
                             JOptionPane.INFORMATION_MESSAGE);
+
                     break;
 
                 } else {
-                    Tnumber = JOptionPane.showInputDialog("Invalid tnumber!! Please re-enter");
+                    Tnumber = JOptionPane.showInputDialog("Invalid t-number must begin with a 't' and finish with numbers, re-enter");
                 }
 
+            } else {
+                Tnumber = JOptionPane.showInputDialog("Invalid!! t-number must be 9 characters long, re-enter");
             }
 
         }
@@ -213,16 +213,27 @@ public class LibraryApp extends JFrame implements ActionListener {
 
         String name = JOptionPane.showInputDialog("Please enter the name of the Student");
 
-        String course = JOptionPane.showInputDialog("Please enter the course of the Student");
+        int i;
+        for (i = 0; i < name.length() && (Character.isLetter(name.charAt(i)) || name.charAt(i) == ' ' || name.charAt(i) == '\''); ++i) {
+
+        }
+
+        if (i == name.length()){
+
+            String course = JOptionPane.showInputDialog("Please enter the course of the Student");
 
 
-        Student s = new Student(Tnumber, name, course);
+            Student s = new Student(Tnumber, name, course);
 
-        allStudents.add(s);
-        JOptionPane.showMessageDialog(null, "Student now created and added to the system!",
-                "Student added", JOptionPane.INFORMATION_MESSAGE);
+            allStudents.add(s);
+            JOptionPane.showMessageDialog(null, "Student now created and added to the system!",
+                    "Student added", JOptionPane.INFORMATION_MESSAGE);
 
 
+        }
+        else {
+            name = JOptionPane.showInputDialog("Invalid name, Please re-enter");
+        }
     }
 
 

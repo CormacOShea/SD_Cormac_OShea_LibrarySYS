@@ -63,6 +63,8 @@ public class Login extends LibraryApp  {
 
                 if(usernameField.getText().equals("Cormac") &&
                         passwordText.equals("123")) {
+                        JOptionPane.showMessageDialog(null,"Welcome to the system " + usernameField.getText(),"Welcome Back",
+                                JOptionPane.INFORMATION_MESSAGE);
                    LibraryApp app = new LibraryApp();
                    dispose();
 

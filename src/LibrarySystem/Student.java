@@ -1,8 +1,8 @@
 package LibrarySystem;
 
-import java.io.Serializable;
 
-public class Student {
+
+public class Student  {
     private int id;
     private String Tnumber;
     private String name;
@@ -45,7 +45,9 @@ public class Student {
     }
 
     public void setName(String name) {
-
+        if(name==null || name.equals(""))
+            this.name = "No name specified";
+        else
         this.name = name;
     }
 

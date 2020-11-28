@@ -7,23 +7,25 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
 import java.io.*;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Iterator;
-import java.util.LinkedList;
+import java.util.*;
 import java.util.stream.Collector;
 
 public class LibraryApp extends JFrame implements ActionListener {
     private JMenu bookMenu, studentMenu, issueMenu;
-    private JLabel label1;
+    private JLabel label1, heading;
     private ImageIcon image1;
+    private JPanel main;
     private JButton studentButton;
-    ArrayList<Student> students = new ArrayList();
-    //  ArrayList<Book> books = new ArrayList();
+    ArrayList<Student> allStudents;
+    ArrayList<Book> allBooks;
     private Student FileOutputStream;
 
 
+
     public LibraryApp() {
+
+
+
         setTitle("Library System");
 
 
@@ -35,37 +37,61 @@ public class LibraryApp extends JFrame implements ActionListener {
         createIssueMenu();
 
 
+        Container cPane = this.getContentPane();
+        cPane.setLayout(new FlowLayout());
+        this.setLocationRelativeTo((Component)null);
         JMenuBar menuBar = new JMenuBar();
         setJMenuBar(menuBar);
         menuBar.setBackground(Color.PINK);
         menuBar.add(this.studentMenu);
         menuBar.add(this.bookMenu);
         menuBar.add(this.issueMenu);
+        this.heading = new JLabel("Library Management System");
+        this.heading.setFont(new Font("serif",2,1));
+        this.heading.setForeground(Color.ORANGE);
+        this.main=new JPanel();
+        this.main.add(Box.createVerticalStrut(30));
+        this.main.setLayout(new BoxLayout(this.main, 1));
+        this.main.add(this.heading);
+        this.main.add(Box.createVerticalStrut(35));
 
-        setSize(400, 350);
+
+
+        setSize(500, 450);
         setLocationRelativeTo(null);
         setResizable(true);
-        setVisible(true);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
-        setLayout(new FlowLayout());
+
+
+
+
+       // usernameField.addActionListener(handler);
+
+
 
 
         this.studentButton = new JButton("Edit");
         this.studentButton.addActionListener(this);
-        try {
-            image1 = new ImageIcon(getClass().getResource("owl2.png"));
+            this.label1 = new JLabel();
+            this.label1.setIcon(new ImageIcon(getClass().getResource("owl2.png")));
+            this.main.add(label1);
+            //image1 = new ImageIcon(getClass().getResource("owl2.png"));
+            //this.image1.setAlignmentX(0.5F);
+            //label1 = new JLabel(image1);
+           // add(label1);
 
-            label1 = new JLabel(image1);
-            add(label1);
-        } catch (Exception var4) {
-            JOptionPane.showMessageDialog((Component) null, "Invalid Image File in Main Screen");
-        }
+        cPane.add(this.main);
+
     }
 
-    public static void main(String[] args) {
-        LibraryApp app = new LibraryApp();
-        app.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+   public static void main(String[] args) {
+
+       LibraryApp app = new LibraryApp();
+
+         app.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         app.setVisible(true);
+
+
 
 
     }
@@ -260,7 +286,7 @@ public class LibraryApp extends JFrame implements ActionListener {
     private void save() throws IOException {
         try{
             ObjectOutputStream st = new ObjectOutputStream(new FileOutputStream("manageStudents.dat"));
-            st.writeObject(this.students);
+            st.writeObject(this.allStudents);
             st.close();
 
 
@@ -332,13 +358,13 @@ public class LibraryApp extends JFrame implements ActionListener {
         JOptionPane.showMessageDialog(null,"Thanks for using the system!",
                 "Farewell", JOptionPane.INFORMATION_MESSAGE);
 
+
         System.exit(0);
 
 
     }
 
     private static void addBook(ArrayList<Book> allBooks) {
-        int id = Integer.parseInt(JOptionPane.showInputDialog("Please enter the id of the Book"));
         String title = JOptionPane.showInputDialog("Please enter the title of the Book");
         String author = JOptionPane.showInputDialog("Please enter the author of the Book");
         int pages = Integer.parseInt(JOptionPane.showInputDialog("Please enter the number of pages of the Book"));
@@ -483,25 +509,28 @@ public class LibraryApp extends JFrame implements ActionListener {
                 "List of all Books",JOptionPane.INFORMATION_MESSAGE);
     }
 
-  //  public void save() throws IOException {
-
-         ///   ObjectOutputStream st = new ObjectOutputStream(new FileOutputStream("registerStudents.dat"));
-          //  st.writeObject(this.students);
-          //  st.close();
-
-           // ObjectOutputStream bk = new ObjectOutputStream(new FileOutputStream("ManageBooks.dat"));
-          //  bk.writeObject(this.books);
-           // bk.close();
+    public void manageIssues(ArrayList<Book> allBooks, ArrayList<Student> allStudents){
+       LoanedBook l1 = new LoanedBook(allStudents.get(1), allBooks.get(1),new GregorianCalendar(2020,11,24),false);
+       LoanedBook l2 = new LoanedBook(allStudents.get(2),allBooks.get(2),new GregorianCalendar(2020,11,30),false);
+       LoanedBook l3 = new LoanedBook(allStudents.get(3),allBooks.get(3),new GregorianCalendar(2019,05,23),true);
 
 
-       // }
+       ArrayList<LoanedBook> allLoaned = new ArrayList<LoanedBook>(Arrays.asList(l1,l2,l3));
 
 
-    public void issueBook(){
-      //  LoanedBook lb1 = new LoanedBook(new Book("Harry Potter and the Philospher's Stone","J.K Rowling", 345,1),)
-       // ArrayList<LoanedBook> allLoaned = new ArrayList<LoanedBook>(Arrays.asList())
 
     }
+
+    public static void issueBook(ArrayList<LoanedBook> allLoaned ){
+
+
+    }
+
+
+
+
+
+
 
 
     //when a menu item is clicked, response starts here
@@ -510,9 +539,7 @@ public class LibraryApp extends JFrame implements ActionListener {
         menuName = e.getActionCommand();
         if (menuName == "Manage") {
             this.manageBook();
-        }
-
-        else if (menuName == "Manage students"){
+        } else if (menuName == "Manage students") {
 
             try {
                 this.manageStudents();
@@ -521,16 +548,30 @@ public class LibraryApp extends JFrame implements ActionListener {
             }
 
 
+        } else if (menuName == "Save") {
+            try {
+                this.save();
+                JOptionPane.showMessageDialog((Component) null, "Data saved successfully", "Saved", 1);
+            } catch (IOException var4) {
+                JOptionPane.showMessageDialog((Component) null, "Not able to save the file");
+
+            }
+        }
+        else if (menuName == "Issue a Book"){
+
+            this.manageIssues(allBooks,  allStudents);
         }
 
-            if (menuName.equals("Quit"))
-                JOptionPane.showMessageDialog(null, "Now closing window", "Closing Window",
-                        JOptionPane.INFORMATION_MESSAGE);
+        else if (menuName == "Quit") {
+            JOptionPane.showMessageDialog(null, "Now closing window", "Closing Window",
+                    JOptionPane.INFORMATION_MESSAGE);
             int choice = JOptionPane.showConfirmDialog(null, "Are you sure you want to exit this application?",
                     "Exiting Application Confirmation", JOptionPane.YES_NO_CANCEL_OPTION);
             if (choice == JOptionPane.YES_OPTION)
                 dispose();
         }
+
+    }
 
     }
 

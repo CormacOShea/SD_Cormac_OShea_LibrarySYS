@@ -213,7 +213,7 @@ public class LibraryApp extends JFrame implements ActionListener {
 
 
 
-        while (!valid) {
+        while (!false) {
 
 
             if (Tnumber.length() == 9) {
@@ -510,9 +510,10 @@ public class LibraryApp extends JFrame implements ActionListener {
     }
 
     public void manageIssues(ArrayList<Book> allBooks, ArrayList<Student> allStudents){
-       LoanedBook l1 = new LoanedBook(allStudents.get(1), allBooks.get(1),new GregorianCalendar(2020,11,24),false);
-       LoanedBook l2 = new LoanedBook(allStudents.get(2),allBooks.get(2),new GregorianCalendar(2020,11,30),false);
-       LoanedBook l3 = new LoanedBook(allStudents.get(3),allBooks.get(3),new GregorianCalendar(2019,05,23),true);
+       LoanedBook l1 = new LoanedBook(allStudents.get(1), allBooks.get(1),new GregorianCalendar(2020,11,24),false,0);
+       LoanedBook l2 = new LoanedBook(allStudents.get(2),allBooks.get(2),new GregorianCalendar(2020,11,30),false,0);
+       LoanedBook l3 = new LoanedBook(allStudents.get(3),allBooks.get(3),new GregorianCalendar(2019,05,23),true,60);
+
 
 
        ArrayList<LoanedBook> allLoaned = new ArrayList<LoanedBook>(Arrays.asList(l1,l2,l3));

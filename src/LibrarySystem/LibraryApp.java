@@ -15,81 +15,74 @@ public class LibraryApp extends JFrame implements ActionListener {
     private JLabel label1, heading;
     private ImageIcon image1;
     private JPanel main;
-    private JButton studentButton;
+    private JButton studentButton, bookButton, overdueButton;
     ArrayList<Student> allStudents;
     ArrayList<Book> allBooks;
     private Student FileOutputStream;
+    private TitledBorder titledBorder;
 
 
 
     public LibraryApp() {
 
-
-
-        setTitle("Library System");
-
-
-        setIconImage(new ImageIcon(getClass().getResource("book.png")).getImage());
-
+        JFrame f = new JFrame("Library Application");
+        f.setIconImage(new ImageIcon(getClass().getResource("book.png")).getImage());
+        f.setLocationRelativeTo(null);
+        f.setResizable(false);
+        f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        f.setSize(325,375);
 
         createStudentMenu();
         createBookMenu();
         createIssueMenu();
 
-
-        Container cPane = this.getContentPane();
-        cPane.setLayout(new FlowLayout());
-        this.setLocationRelativeTo((Component)null);
         JMenuBar menuBar = new JMenuBar();
         setJMenuBar(menuBar);
         menuBar.setBackground(Color.PINK);
         menuBar.add(this.studentMenu);
         menuBar.add(this.bookMenu);
         menuBar.add(this.issueMenu);
-        this.heading = new JLabel("Library Management System");
-        this.heading.setFont(new Font("serif",2,1));
-        this.heading.setForeground(Color.ORANGE);
-        this.main=new JPanel();
-        this.main.add(Box.createVerticalStrut(30));
-        this.main.setLayout(new BoxLayout(this.main, 1));
-        this.main.add(this.heading);
-        this.main.add(Box.createVerticalStrut(35));
 
 
+        JLabel l = new JLabel("Welcome to the Library System!");
+        l.setFont(new Font("Sans Serif", Font.BOLD,20));
+        l.setForeground(Color.BLUE);
+        JPanel P = new JPanel();
+        P.add(menuBar);
+        P.add(l);
 
-        setSize(500, 450);
-        setLocationRelativeTo(null);
-        setResizable(true);
-        setDefaultCloseOperation(EXIT_ON_CLOSE);
+        JLabel label1 = new JLabel();
+        label1.setIcon(new ImageIcon(getClass().getResource("owl2.png")));
+        P.add(label1);
+        P.add(Box.createVerticalStrut(20));
 
 
-
-
-       // usernameField.addActionListener(handler);
-
-
-
-
-        this.studentButton = new JButton("Edit");
+        //Links.setLayout(new GridLayout(1, 3));
+        this.studentButton = new JButton("Add a Student");
         this.studentButton.addActionListener(this);
-            this.label1 = new JLabel();
-            this.label1.setIcon(new ImageIcon(getClass().getResource("owl2.png")));
-            this.main.add(label1);
-            //image1 = new ImageIcon(getClass().getResource("owl2.png"));
-            //this.image1.setAlignmentX(0.5F);
-            //label1 = new JLabel(image1);
-           // add(label1);
+        P.add(this.studentButton);
+        this.bookButton = new JButton("Add a Book");
+        this.bookButton.addActionListener(this);
+        P.add(this.bookButton);
+        this.overdueButton = new JButton("View Overdue");
+        this.overdueButton.addActionListener(this);
+        P.add(this.overdueButton);
+        f.getContentPane().add(P);
 
-        cPane.add(this.main);
 
+
+
+        f.setVisible(true);
+
+/*
+
+*/
     }
 
    public static void main(String[] args) {
 
        LibraryApp app = new LibraryApp();
 
-         app.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        app.setVisible(true);
 
 
 
@@ -208,12 +201,7 @@ public class LibraryApp extends JFrame implements ActionListener {
 
     public static void addStudent(ArrayList<Student> allStudents) {
         String Tnumber;
-        boolean valid = false;
         Tnumber = JOptionPane.showInputDialog("Please enter the t-number of the student");
-
-
-
-        while (!false) {
 
 
             if (Tnumber.length() == 9) {
@@ -224,7 +212,8 @@ public class LibraryApp extends JFrame implements ActionListener {
                     JOptionPane.showMessageDialog(null, "Valid t-number entered", "Valid!",
                             JOptionPane.INFORMATION_MESSAGE);
 
-                    break;
+
+
 
                 } else {
                     Tnumber = JOptionPane.showInputDialog("Invalid t-number must begin with a 't' and finish with numbers, re-enter");
@@ -234,7 +223,7 @@ public class LibraryApp extends JFrame implements ActionListener {
                 Tnumber = JOptionPane.showInputDialog("Invalid!! t-number must be 9 characters long, re-enter");
             }
 
-        }
+
 
 
         String name = JOptionPane.showInputDialog("Please enter the name of the Student");

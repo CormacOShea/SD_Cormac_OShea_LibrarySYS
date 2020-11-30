@@ -5,79 +5,79 @@ import sun.util.resources.cldr.aa.CalendarData_aa_ER;
 
 import java.util.Calendar;
 import java.util.GregorianCalendar;
+import java.util.List;
 
 public class LoanedBook {
-    private GregorianCalendar dateIssued;
-    private String overdue;
-    private Book id;
-    private Student Tnumber;
+    private GregorianCalendar startDate;
+    private GregorianCalendar dueBy;
+    private boolean returned;
+    private Book book;
+    private Student student;
     private int fine;
 
 
-    public LoanedBook(Student Tnumber, Book id, GregorianCalendar dateIssued, boolean overdue, int fine) {
-        setId(id);
-        setTnumber(Tnumber);
-        setDateIssued(dateIssued);
-        setOverdue(overdue);
+    public LoanedBook(Student student, Book book, GregorianCalendar startDate, GregorianCalendar dueBy, boolean overdue, int fine) {
+        setStartDate(startDate);
+        setDueBy(dueBy);
+        setStudent(student);
+        setReturned(returned);
+        setBook(book);
         setFine(fine);
 
 
     }
 
-    public GregorianCalendar getDateIssued() {
-        return dateIssued;
+    public Student getStudent() {
+        return student;
     }
 
-    public void setDateIssued(GregorianCalendar date) {
-        this.dateIssued = date;
+    public void setStudent(Student student) {
+        this.student = student;
     }
 
-    public boolean isOverdue() {
-        return true;
+    public Book getBook() {
+        return book;
     }
 
-    public void setOverdue(boolean overdue) {
-
-        if (overdue==true)
-        this.overdue = "yes";
-        else
-            this.overdue = "no";
+    public void setBook(Book book) {
+        this.book = book;
     }
 
-    public Book getId() {
-        return id;
+    public GregorianCalendar getStartDate() {
+        return startDate;
     }
 
-    public void setId(Book id) {
-        this.id = id;
+    public void setStartDate(GregorianCalendar startDate) {
+        this.startDate = startDate;
     }
 
-    public Student getTnumber() {
-        return Tnumber;
+    public GregorianCalendar getDueBy() {
+        return dueBy;
     }
 
-    public void setTnumber(Student tnumber) {
-        Tnumber = tnumber;
+    public void setDueBy(GregorianCalendar dueBy) {
+        this.dueBy = dueBy;
     }
 
-    /// public int getFine() {
-    //   return fine;
-    // }
+    public boolean isReturned() {
+        return returned;
+    }
 
-    // public void setFine(int fine) {
-    //    this.fine = fine;
-    //}
+    public void setReturned(boolean returned) {
+        this.returned = returned;
+    }
 
     public String toString() {
         String str = super.toString() + "Date Issued: ";
 
-        if (dateIssued.equals(0))
+        if (startDate.equals(0))
             str += "No date specified";
         else
-            str += getDateIssued().get(Calendar.DATE) + "-" + getDateIssued().get(Calendar.MONTH) + "-" +
-                    getDateIssued().get(Calendar.YEAR);
+            str += startDate.get(Calendar.DATE) + "-" + startDate.get(Calendar.MONTH) + "-" +
+                    startDate.get(Calendar.YEAR);
         return str;
     }
+
 
     public int getFine() {
         return fine;
@@ -86,7 +86,7 @@ public class LoanedBook {
     public void setFine(int fine) {
 
         Calendar today = GregorianCalendar.getInstance();
-        int daysPassed = today.get(Calendar.DATE) - getDateIssued().get(Calendar.DATE);
+        int daysPassed = today.get(Calendar.DATE) - startDate.get(Calendar.DATE);
 
         if (daysPassed >= 30) //30 days passed, fine will be given
             this.fine = 10;

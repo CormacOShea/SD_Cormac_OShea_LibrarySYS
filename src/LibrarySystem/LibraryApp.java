@@ -66,7 +66,7 @@ public class LibraryApp extends JFrame implements ActionListener {
         P.add(this.bookButton);
         this.overdueButton = new JButton("View Overdue");
         this.overdueButton.addActionListener(this);
-        P.add(this.overdueButton);
+        P.add(this.overdueButton);      
         f.getContentPane().add(P);
 
 
@@ -353,7 +353,7 @@ public class LibraryApp extends JFrame implements ActionListener {
 
     }
 
-    private static void addBook(ArrayList<Book> allBooks) {
+    public static void addBook(ArrayList<Book> allBooks) {
         String title = JOptionPane.showInputDialog("Please enter the title of the Book");
         String author = JOptionPane.showInputDialog("Please enter the author of the Book");
         int pages = Integer.parseInt(JOptionPane.showInputDialog("Please enter the number of pages of the Book"));
@@ -366,6 +366,7 @@ public class LibraryApp extends JFrame implements ActionListener {
                 "Book Added",JOptionPane.INFORMATION_MESSAGE);
 
     }
+
 
     private static void amendBook(ArrayList<Book> allBooks){
         ArrayList<Book> foundBooks = new ArrayList<Book>();
@@ -498,23 +499,6 @@ public class LibraryApp extends JFrame implements ActionListener {
                 "List of all Books",JOptionPane.INFORMATION_MESSAGE);
     }
 
-    public void manageIssues(ArrayList<Book> allBooks, ArrayList<Student> allStudents){
-       LoanedBook l1 = new LoanedBook(allStudents.get(1), allBooks.get(1),new GregorianCalendar(2020,11,24),false,0);
-       LoanedBook l2 = new LoanedBook(allStudents.get(2),allBooks.get(2),new GregorianCalendar(2020,11,30),false,0);
-       LoanedBook l3 = new LoanedBook(allStudents.get(3),allBooks.get(3),new GregorianCalendar(2019,05,23),true,60);
-
-
-
-       ArrayList<LoanedBook> allLoaned = new ArrayList<LoanedBook>(Arrays.asList(l1,l2,l3));
-
-
-
-    }
-
-    public static void issueBook(ArrayList<LoanedBook> allLoaned ){
-
-
-    }
 
 
 
@@ -526,10 +510,19 @@ public class LibraryApp extends JFrame implements ActionListener {
     //when a menu item is clicked, response starts here
     public void actionPerformed(ActionEvent e) {
         String menuName;
+
+
+
         menuName = e.getActionCommand();
+        if (e.getSource()==this.bookButton){
+            addBook(allBooks);
+        }
+        if (e.getSource()==this.studentButton){
+            addStudent(allStudents);
+        }
         if (menuName == "Manage") {
             this.manageBook();
-        } else if (menuName == "Manage students") {
+        } if (menuName == "Manage students") {
 
             try {
                 this.manageStudents();
@@ -549,8 +542,10 @@ public class LibraryApp extends JFrame implements ActionListener {
         }
         else if (menuName == "Issue a Book"){
 
-            this.manageIssues(allBooks,  allStudents);
+           // this.manageIssues(allBooks,  allStudents);
         }
+
+
 
         else if (menuName == "Quit") {
             JOptionPane.showMessageDialog(null, "Now closing window", "Closing Window",
@@ -560,6 +555,7 @@ public class LibraryApp extends JFrame implements ActionListener {
             if (choice == JOptionPane.YES_OPTION)
                 dispose();
         }
+
 
     }
 

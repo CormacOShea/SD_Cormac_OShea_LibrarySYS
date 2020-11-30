@@ -10,13 +10,13 @@ import java.util.List;
 public class LoanedBook {
     private GregorianCalendar startDate;
     private GregorianCalendar dueBy;
-    private boolean returned;
+    private String returned;
     private Book book;
     private Student student;
     private int fine;
 
 
-    public LoanedBook(Student student, Book book, GregorianCalendar startDate, GregorianCalendar dueBy, boolean overdue, int fine) {
+    public LoanedBook(Student student, Book book, GregorianCalendar startDate, GregorianCalendar dueBy, String returned, int fine) {
         setStartDate(startDate);
         setDueBy(dueBy);
         setStudent(student);
@@ -59,11 +59,13 @@ public class LoanedBook {
         this.dueBy = dueBy;
     }
 
-    public boolean isReturned() {
+    public String isReturned() {
         return returned;
     }
 
-    public void setReturned(boolean returned) {
+    public void setReturned(String returned) {
+
+
         this.returned = returned;
     }
 

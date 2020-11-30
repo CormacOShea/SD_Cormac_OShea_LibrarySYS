@@ -132,23 +132,13 @@ public class LibraryApp extends JFrame implements ActionListener {
     private void createIssueMenu() {
         JMenuItem item;
 
-        issueMenu = new JMenu("Issued Books");
+        issueMenu = new JMenu("Loaned Books");
 
-        item = new JMenuItem("Issue a Book");
+        item = new JMenuItem("Issued Books");
         item.addActionListener(this);
 
         issueMenu.add(item);
 
-        item = new JMenuItem("View Issued Books");
-        item.addActionListener(this);
-
-        issueMenu.add(item);
-
-
-        item = new JMenuItem("View Overdue");
-        item.addActionListener(this);
-
-        issueMenu.add(item);
     }
 
     public void manageStudents() throws IOException {
@@ -499,6 +489,92 @@ public class LibraryApp extends JFrame implements ActionListener {
                 "List of all Books",JOptionPane.INFORMATION_MESSAGE);
     }
 
+    public void manageIssues(ArrayList<Book> allBooks, ArrayList<Student> allStudents){
+      LoanedBook l1 = new LoanedBook(new Student("t00200298","Cormac O'Shea","Computing with Software Development"),
+              new Book("Harry Potter and the philosopher's Stone","j.k rowling",
+                      456,1),new GregorianCalendar(2020,12,1),
+              new GregorianCalendar(2021,1,1),"n"
+              ,0);
+
+      ArrayList<LoanedBook> allLoaned = new ArrayList<LoanedBook>(Arrays.asList(l1));
+
+        String choice;
+
+        do {
+            choice = JOptionPane.showInputDialog("1. issue a book\n2.View Issued books\n3. View over due" +
+                    "\n4. Quit\n\nPlease enter your choice");
+
+            int choiceAsInt = Integer.parseInt(choice);
+
+            while (choiceAsInt<1 || choiceAsInt >5){
+
+                choice = JOptionPane.showInputDialog("1. issue a book\\n2.View Issued books\\n3. View over due"  +
+                                           "\n4. Quit\n\nInvalid choice entered!! Must be between 1 and 5 inclusive");
+
+                choiceAsInt = Integer.parseInt(choice);
+
+            }
+
+            switch (choice){
+                case "1":
+                    issueBook(allLoaned);
+                    break;
+
+                case "2":
+                    viewIssuedBooks(allLoaned);
+                    break;
+
+                case "3":
+                    viewOverdues(allLoaned);
+                    break;
+
+            }
+
+
+        }while (!choice.equals("4"));
+
+        JOptionPane.showMessageDialog(null,"Bringing you back to the menu!",
+                "Redirect", JOptionPane.INFORMATION_MESSAGE);
+
+
+        this.dispose();
+
+    }
+
+    public static void issueBook(ArrayList<LoanedBook> allLoaned ){
+        String name = JOptionPane.showInputDialog("Please enter the name of the name of the student");
+        String title = JOptionPane.showInputDialog("Please enter the title of the book");
+        String date = JOptionPane.showInputDialog("Please enter the date the book was issued");
+        String dueDate = JOptionPane.showInputDialog("Please enter the date the book is due");
+        String returned = JOptionPane.showInputDialog("Is this book returned? (y or n)");
+        String fineAsString = JOptionPane.showInputDialog("How much of a fine is due? 0/30/60");
+        int fine = Integer.parseInt(fineAsString);
+
+        //LoanedBook l = new LoanedBook(name,title,date,dueDate,returned,fine);
+
+
+
+    }
+
+    public static void viewIssuedBooks(ArrayList<LoanedBook> allLoaned){
+        String allLoanedData="";
+        LoanedBook lb;
+
+        Iterator<LoanedBook> iterator = allLoaned.iterator();
+
+        while (iterator.hasNext()){
+            lb = iterator.next();
+            if (lb !=null)
+                allLoanedData += lb + "\n";
+        }
+
+        JOptionPane.showMessageDialog(null,allLoanedData,
+                "List of all Loaned Books",JOptionPane.INFORMATION_MESSAGE);
+    }
+
+    public void viewOverdues(ArrayList<LoanedBook> allLoaned){
+
+    }
 
 
 
@@ -520,9 +596,16 @@ public class LibraryApp extends JFrame implements ActionListener {
         if (e.getSource()==this.studentButton){
             addStudent(allStudents);
         }
+
+        if (e.getSource()==this.overdueButton){
+           addStudent(allStudents);
+        }
         if (menuName == "Manage") {
             this.manageBook();
-        } if (menuName == "Manage students") {
+        }
+
+
+        if (menuName == "Manage students") {
 
             try {
                 this.manageStudents();
@@ -540,9 +623,9 @@ public class LibraryApp extends JFrame implements ActionListener {
 
             }
         }
-        else if (menuName == "Issue a Book"){
+        else if (menuName == "Issued Books"){
 
-           // this.manageIssues(allBooks,  allStudents);
+            this.manageIssues(allBooks,  allStudents);
         }
 
 
@@ -559,5 +642,6 @@ public class LibraryApp extends JFrame implements ActionListener {
 
     }
 
-    }
+
+}
 

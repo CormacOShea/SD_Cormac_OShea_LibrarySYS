@@ -68,11 +68,12 @@ public class Login extends LibraryApp  {
                         passwordText.equals("123")) {
 
 
+                    LibraryApp app = new LibraryApp();
+
+
                         JOptionPane.showMessageDialog(null, "Welcome to the system " + usernameField.getText(), "Welcome Back",
                                 JOptionPane.INFORMATION_MESSAGE);
 
-                        setVisible(false);
-                        LibraryApp app = new LibraryApp();
 
                 } else
                 JOptionPane.showMessageDialog(null, "Invalid username/password " +
@@ -81,7 +82,10 @@ public class Login extends LibraryApp  {
                 }
 
 
+
+
         }
+
 
     }
 

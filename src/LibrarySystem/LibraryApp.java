@@ -12,7 +12,7 @@ import java.util.stream.Collector;
 
 public class LibraryApp extends JFrame implements ActionListener {
     private static ArrayList<LoanedBook> allLoaned;
-    private JMenu bookMenu, studentMenu, issueMenu, fineMenu;
+    private JMenu bookMenu, studentMenu, issueMenu;
     private JLabel label1, heading;
     private ImageIcon image1;
     private JPanel main;
@@ -31,12 +31,13 @@ public class LibraryApp extends JFrame implements ActionListener {
         f.setLocationRelativeTo(null);
         f.setResizable(false);
         f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
         f.setSize(325,375);
 
         createStudentMenu();
         createBookMenu();
         createIssueMenu();
-        createFineMenu();
+
 
         JMenuBar menuBar = new JMenuBar();
         setJMenuBar(menuBar);
@@ -44,7 +45,6 @@ public class LibraryApp extends JFrame implements ActionListener {
         menuBar.add(this.studentMenu);
         menuBar.add(this.bookMenu);
         menuBar.add(this.issueMenu);
-        menuBar.add(this.fineMenu);
 
 
         JLabel l = new JLabel("Welcome to the Library System!");
@@ -147,16 +147,6 @@ public class LibraryApp extends JFrame implements ActionListener {
 
     }
 
-    private void createFineMenu(){
-        JMenuItem item;
-
-        fineMenu = new JMenu("Rules");
-
-        item = new JMenuItem("Rule details");
-        item.addActionListener(this);
-
-        fineMenu.add(item);
-    }
 
     public void manageStudents() throws IOException {
 
@@ -171,14 +161,15 @@ public class LibraryApp extends JFrame implements ActionListener {
         String choice;
 
         do {
-            choice = JOptionPane.showInputDialog("1. Add a Student\n2. View Students\n3. Save changes\n4.Quit\n\nInvalid choice entered!! Must be between 1 and 3 inclusive");
+            choice = JOptionPane.showInputDialog("1. Add a Student\n2. View Students\n3. Save changes\n4.Quit\n\n");
 
             int choiceAsInt = Integer.parseInt(choice);
 
             while (choiceAsInt < 1 || choiceAsInt > 5) {
-                choice = JOptionPane.showInputDialog("1. Add a Student\\n2. View Students\\n3. Save changes\\n4. Quit\\n\\nInvalid choice entered!! Must be between 1 and 3 inclusive");
+                choice = JOptionPane.showInputDialog("1. Add a Student\n2. View Students\n3. Save changes\n4. Quit\n\nInvalid choice entered!! Must be between 1 and 3 inclusive");
 
                 choiceAsInt = Integer.parseInt(choice);
+
 
             }
 
@@ -202,6 +193,9 @@ public class LibraryApp extends JFrame implements ActionListener {
         dispose();
 
 
+
+
+
     }
 
 
@@ -215,7 +209,7 @@ public class LibraryApp extends JFrame implements ActionListener {
                 if (Tnumber.charAt(0) == 't' || Tnumber.charAt(0) == 'T' && Character.isDigit(Tnumber.charAt(1)) && Character.isDigit(Tnumber.charAt(2)) && Character.isDigit(Tnumber.charAt(3))
                         && Character.isDigit(Tnumber.charAt(4)) && Character.isDigit(Tnumber.charAt(5)) && Character.isDigit(Tnumber.charAt(6)) && Character.isDigit(Tnumber.charAt(7))
                         && Character.isDigit(Tnumber.charAt(8))) {
-                    JOptionPane.showMessageDialog(null, "Valid t-number entered", "Valid!",
+                    JOptionPane.showMessageDialog(null, "Valid t-number entered", "Valid t-number",
                             JOptionPane.INFORMATION_MESSAGE);
 
 
@@ -236,25 +230,29 @@ public class LibraryApp extends JFrame implements ActionListener {
 
         int i;
         for (i = 0; i < name.length() && (Character.isLetter(name.charAt(i)) || name.charAt(i) == ' ' || name.charAt(i) == '\''); ++i) {
+            if (i == name.length()) {
 
-        }
-
-        if (i == name.length()){
-
-            String course = JOptionPane.showInputDialog("Please enter the course of the Student");
+                String course = JOptionPane.showInputDialog("Please enter the course of the Student");
+                if (course.length()!=0) {
 
 
-            Student s = new Student(Tnumber, name, course);
+                    Student s = new Student(Tnumber, name, course);
 
-            allStudents.add(s);
-            JOptionPane.showMessageDialog(null, "Student now created and added to the system!",
-                    "Student added", JOptionPane.INFORMATION_MESSAGE);
+                    allStudents.add(s);
+                    JOptionPane.showMessageDialog(null, "Student now created and added to the system!",
+                            "Student added", JOptionPane.INFORMATION_MESSAGE);
 
 
-        }
-        else {
-            name = JOptionPane.showInputDialog("Invalid name, Please re-enter");
-        }
+                }else{
+                    course = JOptionPane.showInputDialog("Invalid! You must enter a course: ");
+                }
+            }else {
+                name = JOptionPane.showInputDialog("Invalid name, Please re-enter the student name: ");
+            }
+
+        } 
+
+
     }
 
 
@@ -627,6 +625,8 @@ public class LibraryApp extends JFrame implements ActionListener {
     public void viewOverdues(ArrayList<LoanedBook> allLoaned){
 
     }
+
+
 
 
 

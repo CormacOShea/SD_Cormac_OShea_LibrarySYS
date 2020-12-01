@@ -11,6 +11,7 @@ import java.util.*;
 import java.util.stream.Collector;
 
 public class LibraryApp extends JFrame implements ActionListener {
+    private static ArrayList<LoanedBook> allLoaned;
     private JMenu bookMenu, studentMenu, issueMenu;
     private JLabel label1, heading;
     private ImageIcon image1;
@@ -180,10 +181,9 @@ public class LibraryApp extends JFrame implements ActionListener {
 
             }
         } while (!choice.equals("4"));
-        JOptionPane.showMessageDialog(null, "Thanks for using the system!",
-                "Farewell", JOptionPane.INFORMATION_MESSAGE);
-
-        System.exit(0);
+        JOptionPane.showMessageDialog(null, "Taking you back to the menu!",
+                "Redirect", JOptionPane.INFORMATION_MESSAGE);
+        dispose();
 
 
     }
@@ -265,7 +265,7 @@ public class LibraryApp extends JFrame implements ActionListener {
     private void save() throws IOException {
         try{
             ObjectOutputStream st = new ObjectOutputStream(new FileOutputStream("manageStudents.dat"));
-            st.writeObject(this.allStudents);
+            st.writeObject(allStudents);
             st.close();
 
 
@@ -492,9 +492,7 @@ public class LibraryApp extends JFrame implements ActionListener {
     public void manageIssues(ArrayList<Book> allBooks, ArrayList<Student> allStudents){
       LoanedBook l1 = new LoanedBook(new Student("t00200298","Cormac O'Shea","Computing with Software Development"),
               new Book("Harry Potter and the philosopher's Stone","j.k rowling",
-                      456,1),new GregorianCalendar(2020,12,1),
-              new GregorianCalendar(2021,1,1),"n"
-              ,0);
+                      456,1),new GregorianCalendar(2020,12,1), "n",0);
 
       ArrayList<LoanedBook> allLoaned = new ArrayList<LoanedBook>(Arrays.asList(l1));
 
@@ -541,17 +539,55 @@ public class LibraryApp extends JFrame implements ActionListener {
 
     }
 
-    public static void issueBook(ArrayList<LoanedBook> allLoaned ){
-        String name = JOptionPane.showInputDialog("Please enter the name of the name of the student");
-        String title = JOptionPane.showInputDialog("Please enter the title of the book");
-        String date = JOptionPane.showInputDialog("Please enter the date the book was issued");
-        String dueDate = JOptionPane.showInputDialog("Please enter the date the book is due");
-        String returned = JOptionPane.showInputDialog("Is this book returned? (y or n)");
-        String fineAsString = JOptionPane.showInputDialog("How much of a fine is due? 0/30/60");
-        int fine = Integer.parseInt(fineAsString);
+    public void issueBook(ArrayList<LoanedBook> allLoaned ){
+        LibraryApp.allLoaned = allLoaned;
+        String name, title, startDate, returned;
 
-        //LoanedBook l = new LoanedBook(name,title,date,dueDate,returned,fine);
+         name = JOptionPane.showInputDialog("Please enter the name of the name of the student");
+        boolean valid = false;
+        while (!valid) {
+             title = JOptionPane.showInputDialog("Please enter the title of the book");
+             startDate = JOptionPane.showInputDialog("Please enter the date the book was issued");
+            if (startDate.length() == 10) {
+                if (Character.isDigit(startDate.charAt(0)) && Character.isDigit(startDate.charAt(1)) && startDate.charAt(2) == '-' && Character.isDigit(startDate.charAt(3)) && Character.isDigit(startDate.charAt(4))
+                        && startDate.charAt(5) == '-' && Character.isDigit(startDate.charAt(6)) && Character.isDigit(startDate.charAt(7)) && Character.isDigit(startDate.charAt(8)) && Character.isDigit(startDate.charAt(9))) {
+                    int year = Integer.parseInt(startDate.substring(6, 10));
+                    int month = Integer.parseInt(startDate.substring(3, 5));
+                    int day = Integer.parseInt(startDate.substring(1, 2));
+                    Calendar cal = new GregorianCalendar();
+                    if (year >= cal.get(2015)) {
+                        if (month >= 1 && month <= 12) {
+                            if (day >= 1 && day <= 31) {
 
+                                 returned = JOptionPane.showInputDialog("Is this book returned? (y or n)");
+                                if (returned.toLowerCase().charAt(0) =='Y' || returned.toLowerCase().charAt(0) == 'N') {
+
+                                    valid = true;
+
+                                }else{
+                                    returned = JOptionPane.showInputDialog("Invalid input!. Please re-enter (y or n): ");
+                                }
+                            } else {
+                                startDate = JOptionPane.showInputDialog("Invalid day!. Please re-enter:");
+
+                            }
+                        } else {
+                            startDate = JOptionPane.showInputDialog("Invalid month!. Please re-enter:");
+                        }
+                    } else {
+                        startDate = JOptionPane.showInputDialog("Invalid! year!. Please re-enter: ");
+                    }
+
+                }
+            } else {
+                startDate = JOptionPane.showInputDialog("Invalid! Please re-enter the date in the form dd-mm-yy");
+            }
+
+
+        //allLoaned.add(name,title,startDate,returned)
+        }
+
+        //LoanedBook l = new LoanedBook(name,title,startDate,returned);
 
 
     }

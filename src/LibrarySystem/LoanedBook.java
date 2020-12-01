@@ -9,16 +9,15 @@ import java.util.List;
 
 public class LoanedBook {
     private GregorianCalendar startDate;
-    private GregorianCalendar dueBy;
+    private static GregorianCalendar dueBy;
     private String returned;
     private Book book;
     private Student student;
-    private int fine;
+    private static int fine;
 
 
-    public LoanedBook(Student student, Book book, GregorianCalendar startDate, GregorianCalendar dueBy, String returned, int fine) {
+    public LoanedBook(Student student, Book book, GregorianCalendar startDate, String returned, int fine) {
         setStartDate(startDate);
-        setDueBy(dueBy);
         setStudent(student);
         setReturned(returned);
         setBook(book);
@@ -49,14 +48,6 @@ public class LoanedBook {
 
     public void setStartDate(GregorianCalendar startDate) {
         this.startDate = startDate;
-    }
-
-    public GregorianCalendar getDueBy() {
-        return dueBy;
-    }
-
-    public void setDueBy(GregorianCalendar dueBy) {
-        this.dueBy = dueBy;
     }
 
     public String isReturned() {

@@ -8,6 +8,7 @@ import java.awt.event.ActionListener;
 public class Login extends LibraryApp  {
     private JTextField usernameField;
     private JPasswordField passwordField;
+    private JButton loginButton;
 
 
     public Login(){
@@ -27,6 +28,8 @@ public class Login extends LibraryApp  {
         Login.add(passwordLabel);
         passwordField = new JPasswordField(10);
         Login.add(passwordField);
+
+
 
         TextFieldEventHandler handler = new TextFieldEventHandler();
 
@@ -63,10 +66,13 @@ public class Login extends LibraryApp  {
 
                 if(usernameField.getText().equals("Cormac") &&
                         passwordText.equals("123")) {
-                        JOptionPane.showMessageDialog(null,"Welcome to the system " + usernameField.getText(),"Welcome Back",
+
+
+                        JOptionPane.showMessageDialog(null, "Welcome to the system " + usernameField.getText(), "Welcome Back",
                                 JOptionPane.INFORMATION_MESSAGE);
-                   LibraryApp app = new LibraryApp();
-                   dispose();
+
+                        setVisible(false);
+                        LibraryApp app = new LibraryApp();
 
                 } else
                 JOptionPane.showMessageDialog(null, "Invalid username/password " +

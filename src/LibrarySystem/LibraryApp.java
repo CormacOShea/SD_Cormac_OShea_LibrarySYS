@@ -12,7 +12,7 @@ import java.util.stream.Collector;
 
 public class LibraryApp extends JFrame implements ActionListener {
     private static ArrayList<LoanedBook> allLoaned;
-    private JMenu bookMenu, studentMenu, issueMenu;
+    private JMenu bookMenu, studentMenu, issueMenu, fineMenu;
     private JLabel label1, heading;
     private ImageIcon image1;
     private JPanel main;
@@ -36,6 +36,7 @@ public class LibraryApp extends JFrame implements ActionListener {
         createStudentMenu();
         createBookMenu();
         createIssueMenu();
+        createFineMenu();
 
         JMenuBar menuBar = new JMenuBar();
         setJMenuBar(menuBar);
@@ -43,6 +44,7 @@ public class LibraryApp extends JFrame implements ActionListener {
         menuBar.add(this.studentMenu);
         menuBar.add(this.bookMenu);
         menuBar.add(this.issueMenu);
+        menuBar.add(this.fineMenu);
 
 
         JLabel l = new JLabel("Welcome to the Library System!");
@@ -80,7 +82,10 @@ public class LibraryApp extends JFrame implements ActionListener {
 */
     }
 
-   public static void main(String[] args) {
+
+
+
+    public static void main(String[] args) {
 
        LibraryApp app = new LibraryApp();
 
@@ -140,6 +145,17 @@ public class LibraryApp extends JFrame implements ActionListener {
 
         issueMenu.add(item);
 
+    }
+
+    private void createFineMenu(){
+        JMenuItem item;
+
+        fineMenu = new JMenu("Rules");
+
+        item = new JMenuItem("Rule details");
+        item.addActionListener(this);
+
+        fineMenu.add(item);
     }
 
     public void manageStudents() throws IOException {

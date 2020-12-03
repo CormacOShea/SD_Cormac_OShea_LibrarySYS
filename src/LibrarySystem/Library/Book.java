@@ -1,4 +1,4 @@
-package LibrarySystem;
+package LibrarySystem.Library;
 
 import java.io.Serializable;
 

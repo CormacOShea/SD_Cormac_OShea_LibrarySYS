@@ -1,18 +1,16 @@
-package LibrarySystem;
+package LibrarySystem.Library;
 
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.WindowEvent;
 import java.io.*;
 import java.util.*;
-import java.util.stream.Collector;
 
 /***************
  * Code from past student dj?? the Restaurant Project that was shown in problem solving class
- * Title Menu lines 694- 701
+ * Title Menu lines 694- 701 and line 39
  * Author: Cormac O'Shea
  * Owner: Past student Dj
  * Date:

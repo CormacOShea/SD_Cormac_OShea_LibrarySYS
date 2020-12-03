@@ -1,11 +1,11 @@
-package LibrarySystem;
+package LibrarySystem.Library;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class Login extends LibraryApp  {
+public class Login extends LibraryApp {
     private JTextField usernameField;
     private JPasswordField passwordField;
     private JButton loginButton;

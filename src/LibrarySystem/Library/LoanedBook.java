@@ -1,11 +1,10 @@
-package LibrarySystem;
+package LibrarySystem.Library;
 
-import sun.util.calendar.Gregorian;
-import sun.util.resources.cldr.aa.CalendarData_aa_ER;
+import LibrarySystem.Library.Book;
+import LibrarySystem.Library.Student;
 
 import java.util.Calendar;
 import java.util.GregorianCalendar;
-import java.util.List;
 
 public class LoanedBook {
     private GregorianCalendar startDate;

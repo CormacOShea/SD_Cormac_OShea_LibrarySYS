@@ -10,6 +10,15 @@ import java.io.*;
 import java.util.*;
 import java.util.stream.Collector;
 
+/***************
+ * Code from past student dj?? the Restaurant Project that was shown in problem solving class
+ * Title Menu lines 694- 701
+ * Author: Cormac O'Shea
+ * Owner: Past student Dj
+ * Date:
+ * Code version:
+ */
+
 public class LibraryApp extends JFrame implements ActionListener {
     private static ArrayList<LoanedBook> allLoaned;
     private JMenu bookMenu, studentMenu, issueMenu;

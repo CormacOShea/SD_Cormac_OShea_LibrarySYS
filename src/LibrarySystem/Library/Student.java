@@ -1,6 +1,8 @@
 package LibrarySystem.Library;
 
-
+//Student.java
+ /* An instantiable class which defines a student.
+ */
 
 public class Student  {
     private int id;
@@ -43,6 +45,11 @@ public class Student  {
 
         return name;
     }
+
+    /**
+     * validation for when the user enters their name
+     * @param name the name of the Student object
+     */
 
     public void setName(String name) {
         if(name==null || name.equals(""))

@@ -49,7 +49,7 @@ public class Book implements Serializable {
 
     /**
      * Method to set the ID of a Book object
-     * @param id the id number of the Book
+     * @param id the id of the Book
      */
 
 

@@ -1,5 +1,9 @@
 package LibrarySystem.Library;
 
+//LibraryApp.java
+/*A driver program that tests the functionality of the Student, Book and
+Loaned Book classes as well as the LibraryApp interface*/
+
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
 import java.awt.*;
@@ -17,12 +21,12 @@ import java.util.*;
  * Code version:
  */
 
+
+
 public class LibraryApp extends JFrame implements ActionListener {
     private static ArrayList<LoanedBook> allLoaned;
     private JMenu bookMenu, studentMenu, issueMenu;
-    private JLabel label1, heading;
     private ImageIcon image1;
-    private JPanel main;
     private JButton studentButton, bookButton, overdueButton;
     ArrayList<Student> allStudents;
     ArrayList<Book> allBooks;
@@ -33,13 +37,13 @@ public class LibraryApp extends JFrame implements ActionListener {
 
     public LibraryApp() {
 
-        JFrame f = new JFrame("Library Application");
-        f.setIconImage(new ImageIcon(getClass().getResource("book.png")).getImage());
-        f.setLocationRelativeTo(null);
-        f.setResizable(false);
-        f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        JFrame frame = new JFrame("Library Application");
+        frame.setIconImage(new ImageIcon(getClass().getResource("book.png")).getImage());
+        frame.setLocationRelativeTo(null);
+        frame.setResizable(false);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        f.setSize(325,375);
+        frame.setSize(325,375);
 
         createStudentMenu();
         createBookMenu();
@@ -54,12 +58,12 @@ public class LibraryApp extends JFrame implements ActionListener {
         menuBar.add(this.issueMenu);
 
 
-        JLabel l = new JLabel("Welcome to the Library System!");
-        l.setFont(new Font("Sans Serif", Font.BOLD,20));
-        l.setForeground(Color.BLUE);
+        JLabel label = new JLabel("Welcome to the Library System!");
+        label.setFont(new Font("Sans Serif", Font.BOLD,20));
+        label.setForeground(Color.BLUE);
         JPanel P = new JPanel();
         P.add(menuBar);
-        P.add(l);
+        P.add(label);
 
         JLabel label1 = new JLabel();
         label1.setIcon(new ImageIcon(getClass().getResource("owl2.png")));
@@ -77,12 +81,12 @@ public class LibraryApp extends JFrame implements ActionListener {
         this.overdueButton = new JButton("View Overdue");
         this.overdueButton.addActionListener(this);
         P.add(this.overdueButton);      
-        f.getContentPane().add(P);
+        frame.getContentPane().add(P);
 
 
 
 
-        f.setVisible(true);
+        frame.setVisible(true);
 
 /*
 
@@ -206,11 +210,11 @@ public class LibraryApp extends JFrame implements ActionListener {
     }
 
 
-    public static void addStudent(ArrayList<Student> allStudents) {
+    private static void addStudent(ArrayList<Student> allStudents) {
         String Tnumber;
         Tnumber = JOptionPane.showInputDialog("Please enter the t-number of the student");
 
-
+               // Check if a valid t-number is entered in
             if (Tnumber.length() == 9) {
 
                 if (Tnumber.charAt(0) == 't' || Tnumber.charAt(0) == 'T' && Character.isDigit(Tnumber.charAt(1)) && Character.isDigit(Tnumber.charAt(2)) && Character.isDigit(Tnumber.charAt(3))
@@ -234,30 +238,24 @@ public class LibraryApp extends JFrame implements ActionListener {
 
 
         String name = JOptionPane.showInputDialog("Please enter the name of the Student");
-
+         // Check to see if a valid name is entered in
         int i;
         for (i = 0; i < name.length() && (Character.isLetter(name.charAt(i)) || name.charAt(i) == ' ' || name.charAt(i) == '\''); ++i) {
-            if (i == name.length()) {
 
+        }
                 String course = JOptionPane.showInputDialog("Please enter the course of the Student");
                 if (course.length()!=0) {
 
-
-                    Student s = new Student(Tnumber, name, course);
-
-                    allStudents.add(s);
-                    JOptionPane.showMessageDialog(null, "Student now created and added to the system!",
-                            "Student added", JOptionPane.INFORMATION_MESSAGE);
-
-
                 }else{
-                    course = JOptionPane.showInputDialog("Invalid! You must enter a course: ");
+                    course = JOptionPane.showInputDialog("Invalid! You must enter something");
                 }
-            }else {
-                name = JOptionPane.showInputDialog("Invalid name, Please re-enter the student name: ");
-            }
+            Student s = new Student(Tnumber, name, course);
 
-        } 
+            allStudents.add(s);
+            JOptionPane.showMessageDialog(null, "Student now created and added to the system!",
+                    "Student added", JOptionPane.INFORMATION_MESSAGE);
+
+
 
 
     }
@@ -282,6 +280,12 @@ public class LibraryApp extends JFrame implements ActionListener {
                     JOptionPane.INFORMATION_MESSAGE);
 
     }
+
+    /**
+     * This piece of code is intended to save all the data that was added by the user
+     * in the manageStudents menu
+     * @throws IOException saves the file
+     */
 
     private void save() throws IOException {
         try{
@@ -364,7 +368,7 @@ public class LibraryApp extends JFrame implements ActionListener {
 
     }
 
-    public static void addBook(ArrayList<Book> allBooks) {
+    private static void addBook(ArrayList<Book> allBooks) {
         String title = JOptionPane.showInputDialog("Please enter the title of the Book");
         String author = JOptionPane.showInputDialog("Please enter the author of the Book");
         int pages = Integer.parseInt(JOptionPane.showInputDialog("Please enter the number of pages of the Book"));
@@ -510,6 +514,13 @@ public class LibraryApp extends JFrame implements ActionListener {
                 "List of all Books",JOptionPane.INFORMATION_MESSAGE);
     }
 
+    /**
+     * The follow code is when the user issues a book from the system.
+     * Aggregation is displayed here with the Student object and book object.
+     * @param allBooks
+     * @param allStudents
+     */
+
     public void manageIssues(ArrayList<Book> allBooks, ArrayList<Student> allStudents){
       LoanedBook l1 = new LoanedBook(new Student("t00200298","Cormac O'Shea","Computing with Software Development"),
               new Book("Harry Potter and the philosopher's Stone","j.k rowling",
@@ -559,6 +570,12 @@ public class LibraryApp extends JFrame implements ActionListener {
         this.dispose();
 
     }
+
+    /**
+     * Here is a method to issue a book, input validation is used to ensure the user
+     * enters the correct format of details
+     * @param allLoaned
+     */
 
     public void issueBook(ArrayList<LoanedBook> allLoaned ){
         LibraryApp.allLoaned = allLoaned;
@@ -634,15 +651,10 @@ public class LibraryApp extends JFrame implements ActionListener {
     }
 
 
+    /**
+     *  when a menu item is clicked, response starts here
+     */
 
-
-
-
-
-
-
-
-    //when a menu item is clicked, response starts here
     public void actionPerformed(ActionEvent e) {
         String menuName;
 

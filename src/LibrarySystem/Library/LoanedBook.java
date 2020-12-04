@@ -1,4 +1,9 @@
 package LibrarySystem.Library;
+//LoanedBook.java
+/*
+An instantiable class definition for a Loaned book which also demonstrates the
+OO concept of aggregation. The Gregorian Calendar is also used.
+*/
 
 import LibrarySystem.Library.Book;
 import LibrarySystem.Library.Student;

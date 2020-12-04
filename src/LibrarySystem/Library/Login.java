@@ -1,4 +1,7 @@
 package LibrarySystem.Library;
+//Login.java
+/*This program initialises the package i.e run the project from here
+ */
 
 import javax.swing.*;
 import java.awt.*;
